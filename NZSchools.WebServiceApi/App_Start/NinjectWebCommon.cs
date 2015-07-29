@@ -10,7 +10,6 @@ namespace NZSchools.WebServiceApi.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using NZSchools.WebServiceApi.Services.DatabaseService;
 
     public static class NinjectWebCommon 
     {
@@ -62,7 +61,6 @@ namespace NZSchools.WebServiceApi.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IDatabaseService>().To<DatabaseService>();
         }        
     }
 }

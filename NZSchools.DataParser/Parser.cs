@@ -21,14 +21,7 @@ namespace NZSchools.DataParser
 
         public void Begin()
         {
-            var directory = _excel.Read<Directory>(DirectoryFilePath, 3);
-            if (directory == null)
-                return;
-
-            var index = 1;
-
-            foreach (var d in directory)
-                d.Id = index++;
+            _excel.Read<Directory>(DirectoryFilePath, 3);
         }
     }
 }

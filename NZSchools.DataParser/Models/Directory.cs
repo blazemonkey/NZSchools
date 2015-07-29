@@ -8,7 +8,6 @@ namespace NZSchools.DataParser.Models
 {
     public class Directory
     {
-        public int Id { get; set; }
         public int SchoolId { get; set; }
         public string Name { get; set; }
         public string Telephone { get; set; }
