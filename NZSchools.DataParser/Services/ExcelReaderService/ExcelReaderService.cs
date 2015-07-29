@@ -32,8 +32,13 @@ namespace NZSchools.DataParser.Services.ExcelReaderService
                         var t = new T();
                         foreach (var info in t.GetType().GetProperties())
                         {
-                            var index = _headerRows.IndexOf(_headerRows.First(
-                                x => x.ToLower().Replace(" ", "") == info.Name.ToLower().Replace(" ", "")));
+                            var header = _headerRows.FirstOrDefault(
+                                x => x.ToLower().Replace(" ", "") == info.Name.ToLower().Replace(" ", ""));
+
+                            if (header == null)
+                                continue;
+                            
+                            var index = _headerRows.IndexOf(header);
                             if (info.PropertyType == typeof(string))
                                 info.SetValue(t, Convert.ChangeType(string.IsNullOrEmpty(row[index]) ? "" : row[index].ToString(), info.PropertyType, null));
 
@@ -49,7 +54,7 @@ namespace NZSchools.DataParser.Services.ExcelReaderService
                 catch (InvalidOperationException ioe)
                 {
                     Logger.Error(ioe);
-                    Logger.Error("Couldn't find a matching column from property");
+                    
                     return null;
                 }
             }
