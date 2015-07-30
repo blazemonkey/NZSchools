@@ -11,5 +11,8 @@ namespace NZSchools.WebServiceApi.Services.DatabaseService
     {
         Task<IEnumerable<Directory>> GetDirectories();
         Task<Directory> GetDirectoryById(int id);
+        Task<bool> UpdateDirectory(Directory directory);
+        Task<bool> AddDirectory(Directory directory);
+        Task<bool> DeleteDirectory(int id);
     }
 }

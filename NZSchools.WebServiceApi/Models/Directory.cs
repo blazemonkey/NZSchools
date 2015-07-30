@@ -46,5 +46,7 @@ namespace NZSchools.WebServiceApi.Models
         public int Melaa { get; set; }
         public int Other { get; set; }
         public int InternationalStudents { get; set; }
+        public int ChangeId { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -28,7 +28,11 @@ namespace NZSchools.DataParser
             var index = 1;
 
             foreach (var d in directory)
+            {
                 d.Id = index++;
+                d.ChangeId = d.Id;
+                d.Status = true;
+            }
         }
     }
 }

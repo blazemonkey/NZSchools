@@ -27,5 +27,41 @@ namespace NZSchools.WebServiceApi.Services.DatabaseService
         {
             return await _db.Directories.SingleOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<bool> UpdateDirectory(Directory directory)
+        {
+            var find = await _db.Directories.FindAsync(directory.Id);
+            if (find == null)
+                return false;
+
+            find.Name = directory.Name;
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> AddDirectory(Directory directory)
+        {
+            var find = await _db.Directories.FindAsync(directory.Id);
+            if (find != null)
+                return false;
+
+            _db.Directories.Add(directory);
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteDirectory(int id)
+        {
+            var find = await _db.Directories.FindAsync(id);
+            if (find == null)
+                return false;
+
+            _db.Directories.Remove(find);
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

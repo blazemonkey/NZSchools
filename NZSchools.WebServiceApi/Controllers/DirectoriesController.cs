@@ -21,12 +21,12 @@ namespace NZSchools.WebServiceApi.Controllers
 
         public async Task<IEnumerable<Directory>> Get()
         {
-            return null;
+            return await _db.GetDirectories();
         }
 
         public async Task<Directory> Get(int id)
         {
-            return null;
+            return await _db.GetDirectoryById(id);
         }
 
         [HttpPut]
@@ -35,7 +35,8 @@ namespace NZSchools.WebServiceApi.Controllers
             if (directory == null)
                 throw new ArgumentNullException("directory");
 
-            return false;
+            var result = await _db.UpdateDirectory(directory);
+            return result;
         }
 
         [HttpPost]
@@ -44,7 +45,15 @@ namespace NZSchools.WebServiceApi.Controllers
             if (directory == null)
                 throw new ArgumentNullException("directory");
 
-            return false;
+            var result = await _db.AddDirectory(directory);
+            return result;
+        }
+
+        [HttpDelete]
+        public async Task<bool> Delete(int id)
+        {
+            var result = await _db.DeleteDirectory(id);
+            return result;
         }
     }
 }
