@@ -2,6 +2,9 @@
 using Microsoft.Practices.Unity;
 using NZSchools.DataParser.Services.ExcelReaderService;
 using NZSchools.DataParser.Services.WebClientService;
+using NZSchools.DataParser.Services.RestService;
+using NZSchools.DataParser.Services.JsonService;
+using System.Threading.Tasks;
 
 namespace NZSchools.DataParser
 {
@@ -16,7 +19,11 @@ namespace NZSchools.DataParser
             RegisterTypes(container);
             ResolveTypes(container);
 
-            Start();
+            Task.Run(async () =>
+            {
+                await Start();
+            }).Wait();
+            
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadLine();
@@ -25,6 +32,8 @@ namespace NZSchools.DataParser
         private static void RegisterTypes(IUnityContainer container)
         {
             container.RegisterType<IExcelReaderService, ExcelReaderService>();
+            container.RegisterType<IJsonService, JsonService>();
+            container.RegisterType<IRestService, RestService>();
             container.RegisterType<IWebClientService, WebClientService>();
         }
 
@@ -34,15 +43,15 @@ namespace NZSchools.DataParser
             _parser = container.Resolve<Parser>();
         }
 
-        private static void Start()
+        private static async Task Start()
         {
-            //if (!_fileDownloader.GetLatest())
-            //{
-            //    Logger.Error("Failed to download file. Exiting.");
-            //    return;
-            //}
+            if (!_fileDownloader.GetLatest())
+            {
+                Logger.Error("Failed to download file. Exiting.");
+                return;
+            }
 
-            _parser.Begin();
+            await _parser.Begin();
         }
     }
 }

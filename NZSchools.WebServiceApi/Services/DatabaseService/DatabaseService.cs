@@ -34,7 +34,47 @@ namespace NZSchools.WebServiceApi.Services.DatabaseService
             if (find == null)
                 return false;
 
+            find.Asian = directory.Asian;
+            find.Authority = directory.Authority;
+            find.CensusAreaUnit = directory.CensusAreaUnit;
+            find.ChangeId = directory.ChangeId;
+            find.City = directory.City;
+            find.Decile = directory.Decile;
+            find.Definition = directory.Definition;
+            find.EducationRegion = directory.EducationRegion;
+            find.Email = directory.Email;
+            find.EuropeanPākehā = directory.EuropeanPākehā;
+            find.Fax = directory.Fax;
+            find.GenderOfStudents = directory.GenderOfStudents;
+            find.GeneralElectorate = directory.GeneralElectorate;
+            find.InternationalStudents = directory.InternationalStudents;
+            find.Latitude = directory.Latitude;
+            find.Longitude = directory.Longitude;
+            find.Māori = directory.Māori;
+            find.MāoriElectorate = directory.MāoriElectorate;
+            find.Melaa = directory.Melaa;
+            find.MinistryOfEducationLocalOffice = directory.MinistryOfEducationLocalOffice;            
             find.Name = directory.Name;
+            find.Other = directory.Other;
+            find.Pasifika = directory.Pasifika;
+            find.PostalAddress1 = directory.PostalAddress1;
+            find.PostalAddress2 = directory.PostalAddress2;
+            find.PostalAddress3 = directory.PostalAddress3;
+            find.PostalCode = directory.PostalCode;
+            find.Principal = directory.Principal;
+            find.RegionalCouncil = directory.RegionalCouncil;
+            find.SchoolId = directory.SchoolId;
+            find.SchoolType = directory.SchoolType;
+            find.SchoolWebsite = directory.SchoolWebsite;
+            find.Status = directory.Status;
+            find.Street = directory.Street;
+            find.Suburb = directory.Suburb;
+            find.Telephone = directory.Telephone;
+            find.TerritorialAuthorityWithAucklandLocalBoard = directory.TerritorialAuthorityWithAucklandLocalBoard;
+            find.TotalSchoolRoll = directory.TotalSchoolRoll;
+            find.UrbanArea = directory.UrbanArea;
+            find.Ward = directory.Ward;            
+            
             await _db.SaveChangesAsync();
 
             return true;

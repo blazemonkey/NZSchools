@@ -6,8 +6,8 @@ using System.Web;
 
 namespace NZSchools.WebServiceApi.DAL
 {
-    // DropCreateDatabaseIfModelChanges
-    public class SchoolInitializer : DropCreateDatabaseAlways<SchoolContext>
+    // DropCreateDatabaseAlways
+    public class SchoolInitializer : DropCreateDatabaseIfModelChanges<SchoolContext>
     {
 
         public SchoolInitializer()
