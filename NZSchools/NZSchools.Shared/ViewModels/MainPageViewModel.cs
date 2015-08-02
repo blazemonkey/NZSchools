@@ -8,6 +8,8 @@ namespace NZSchools.ViewModels
 {
     public class MainPageViewModel : ViewModel, IMainPageViewModel
     {
+        
+
         public MainPageViewModel()
         {
 

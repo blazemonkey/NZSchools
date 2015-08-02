@@ -18,6 +18,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\ISqlLiteService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLiteAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SqlLiteService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
   </ItemGroup>
 </Project>

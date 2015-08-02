@@ -14,8 +14,12 @@
         <Pivot>
             <PivotItem Header="search">
                 <Grid Margin="20">
-                    <TextBlock HorizontalAlignment="Center" 
-                               Text="choose a city"/>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="choose a city"/>
+                        <ComboBox>
+                            
+                        </ComboBox>
+                    </StackPanel>
                 </Grid>                
             </PivotItem>
             <PivotItem Header="meow"/>
