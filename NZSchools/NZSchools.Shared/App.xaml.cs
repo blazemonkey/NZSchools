@@ -1,5 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using NZSchools.Services.JsonService;
 using NZSchools.Services.NavigationService;
+using NZSchools.Services.SqlLiteService;
 using SimpleInjector;
 using System;
 using System.Collections.Generic;
@@ -44,7 +46,9 @@ namespace NZSchools
         protected override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Container.RegisterSingle(NavigationService);
+            Container.Register<IJsonService, JsonService>();
             Container.Register<INavigationService, NavigationService>();
+            Container.Register<ISqlLiteService, SqlLiteService>();
         }
 
         protected override object Resolve(Type type)

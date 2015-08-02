@@ -16,6 +16,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\IJsonService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\JsonService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\ISqlLiteService.cs" />
@@ -26,5 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Data\directories.json" />
   </ItemGroup>
 </Project>

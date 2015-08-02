@@ -98,7 +98,10 @@ namespace NZSchools.DataParser
                         continue;
                     }
                 }
-            }            
+            }
+
+            var json = _json.Serialize(currentList);
+            System.IO.File.WriteAllText("directories.json", json, Encoding.Unicode);
         }
     }
 }
