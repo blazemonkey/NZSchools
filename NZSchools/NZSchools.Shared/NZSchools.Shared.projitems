@@ -16,6 +16,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\FileReaderService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\IFileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\IJsonService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\JsonService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigationService.cs" />

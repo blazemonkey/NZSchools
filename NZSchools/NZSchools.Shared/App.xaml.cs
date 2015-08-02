@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using NZSchools.Services.FileReaderService;
 using NZSchools.Services.JsonService;
 using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
@@ -46,6 +47,7 @@ namespace NZSchools
         protected override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Container.RegisterSingle(NavigationService);
+            Container.Register<IFileReaderService, FileReaderService>();
             Container.Register<IJsonService, JsonService>();
             Container.Register<INavigationService, NavigationService>();
             Container.Register<ISqlLiteService, SqlLiteService>();
