@@ -15,7 +15,7 @@
     <SolidColorBrush x:Key="PivotForegroundBrush" Color="White"/>
     <SolidColorBrush x:Key="PivotItemBackgroundBrush" Color="White"/>
     <SolidColorBrush x:Key="PivotItemForegroundBrush" Color="Black"/>
-    <SolidColorBrush x:Key="PivotItemSecondaryForegroundBrush" Color="Black"/>
+    <SolidColorBrush x:Key="PivotItemSecondaryForegroundBrush" Color="Gray"/>
     <x:Double x:Key="PivotItemFontSize">18</x:Double>
     <Thickness x:Key="PivotPortraitThemePadding">19,38,0,0</Thickness>
     <Thickness x:Key="PivotLandscapeThemePadding">19,25,0,0</Thickness>
@@ -116,12 +116,12 @@
     <Style TargetType="ComboBox">
         <Setter Property="Foreground" Value="{StaticResource PivotItemSecondaryForegroundBrush}"/>
         <Setter Property="Background" Value="{ThemeResource ComboBoxBackgroundThemeBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="{ThemeResource ComboBoxBorderThemeThickness}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontFamily" Value="{ThemeResource PhoneFontFamilyNormal}"/>
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Light" />
         <Setter Property="Margin" Value="0"/>
+        <Setter Property="Width" Value="Auto"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
@@ -260,9 +260,9 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" FlowDirection="{TemplateBinding FlowDirection}" HorizontalAlignment="Left" Margin="0,0,0,-4.5" Style="{StaticResource HeaderContentPresenterStyle}" Visibility="Collapsed"/>
-                        <Button x:Name="FlyoutButton" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" FontWeight="Normal" FlowDirection="{TemplateBinding FlowDirection}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" MinHeight="{ThemeResource ComboBoxItemMinHeightThemeSize}" Padding="6.5,0,0,0" Grid.Row="1" Foreground="{TemplateBinding Foreground}">
+                        <Button x:Name="FlyoutButton" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" FontWeight="Light" FlowDirection="{TemplateBinding FlowDirection}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" MinHeight="{ThemeResource ComboBoxItemMinHeightThemeSize}" Padding="6.5,0,0,0" Grid.Row="1" Foreground="{TemplateBinding Foreground}">
                             <ContentPresenter x:Name="ContentPresenter" Margin="0,0.8,0,0" MinHeight="32.5">
-                                <TextBlock x:Name="PlaceholderTextBlock" Margin="0" Style="{StaticResource ComboBoxPlaceholderTextBlockStyle}" Text="{TemplateBinding PlaceholderText}"/>
+                                <TextBlock x:Name="PlaceholderTextBlock" Margin="0" Style="{StaticResource ComboBoxPlaceholderTextBlockStyle}" Text="{TemplateBinding PlaceholderText}" FontSize="{TemplateBinding FontSize}"/>
                             </ContentPresenter>
                         </Button>
                         <Border x:Name="ShortListOuterBorder" Margin="{ThemeResource PhoneTouchTargetOverhang}" Grid.Row="1" Visibility="Collapsed">

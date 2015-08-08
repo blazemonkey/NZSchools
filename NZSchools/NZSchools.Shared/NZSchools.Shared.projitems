@@ -15,7 +15,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageFullPathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\FileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\IFileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\IJsonService.cs" />
@@ -29,9 +32,22 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Data\directories.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\auckland.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\bayofplenty.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\canterbury.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\gisborne.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\hawkesbay.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\manawatu.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\marlborough.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\nelson.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\northland.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\otago.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\southland.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\taranaki.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\tasman.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\waikato.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\wellington.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Regions\westcoast.png" />
   </ItemGroup>
 </Project>

@@ -51,6 +51,8 @@ namespace NZSchools
             Container.Register<IJsonService, JsonService>();
             Container.Register<INavigationService, NavigationService>();
             Container.Register<ISqlLiteService, SqlLiteService>();
+
+            await Container.GetInstance<SqlLiteService>().ClearLocalDb();
         }
 
         protected override object Resolve(Type type)
