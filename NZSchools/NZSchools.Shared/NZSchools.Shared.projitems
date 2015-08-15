@@ -20,6 +20,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Directory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Region.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\AppDataService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\IAppDataService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\FileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\IFileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\IJsonService.cs" />

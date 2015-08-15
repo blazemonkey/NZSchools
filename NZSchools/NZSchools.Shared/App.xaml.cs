@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Interfaces;
+using NZSchools.Services.AppDataService;
 using NZSchools.Services.FileReaderService;
 using NZSchools.Services.JsonService;
 using NZSchools.Services.NavigationService;
@@ -49,6 +50,7 @@ namespace NZSchools
         protected override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             Container.RegisterSingle(NavigationService);
+            Container.Register<IAppDataService, AppDataService>();
             Container.Register<IFileReaderService, FileReaderService>();
             Container.Register<IJsonService, JsonService>();
             Container.Register<INavigationService, NavigationService>();
@@ -56,6 +58,7 @@ namespace NZSchools
             Container.RegisterSingle<ISettingsPageViewModel, SettingsPageViewModel>();
 
             await Container.GetInstance<SqlLiteService>().ClearLocalDb();
+            Container.GetInstance<AppDataService>().InitializeAppDataContainer();
         }
 
         protected override object Resolve(Type type)
