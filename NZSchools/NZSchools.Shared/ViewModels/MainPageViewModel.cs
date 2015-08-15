@@ -2,6 +2,7 @@
 using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Interfaces;
 using NZSchools.Models;
+using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace NZSchools.ViewModels
     public class MainPageViewModel : ViewModel, IMainPageViewModel
     {
         private ISqlLiteService _db;
+        private INavigationService _nav;
+        private ISettingsPageViewModel _settings;
 
         private List<Directory> _directories;
         private ObservableCollection<Region> _regions;
@@ -180,10 +183,15 @@ namespace NZSchools.ViewModels
         public DelegateCommand SelectedRegionChangedCommand { get; set; }
         public DelegateCommand SelectedCityChangedCommand { get; set; }
 
-        public MainPageViewModel(ISqlLiteService db)
+        public DelegateCommand TapSettingsCommand { get; set; }
+
+        public MainPageViewModel(ISqlLiteService db, INavigationService nav, ISettingsPageViewModel settings)
         {
             _db = db;
+            _nav = nav;
+            _settings = settings;
 
+            Directories = new List<Directory>();
             Cities = new ObservableCollection<string>();
             Suburbs = new ObservableCollection<string>();
             Genders = new ObservableCollection<string>();
@@ -192,6 +200,8 @@ namespace NZSchools.ViewModels
 
             SelectedRegionChangedCommand = new DelegateCommand(ExecuteSelectedRegionChangedCommand);
             SelectedCityChangedCommand = new DelegateCommand(ExecuteSelectedCityChangedCommand);
+
+            TapSettingsCommand = new DelegateCommand(ExecuteTapSettingsCommand);
         }
 
         private async void ExecuteSelectedRegionChangedCommand()
@@ -202,7 +212,7 @@ namespace NZSchools.ViewModels
                 // no joke, without this task delay it doesn't work
                 // bloody cost me till 2am! 
                 // http://stackoverflow.com/questions/28199771/universal-app-loading-combobox-itemssource-async-gives-weird-behaviour
-                await Task.Delay(100);                                                   
+                await Task.Delay(50);                                                   
             }
 
             Cities.Add("all cities");
@@ -215,10 +225,13 @@ namespace NZSchools.ViewModels
 
         private async void ExecuteSelectedCityChangedCommand()
         {
+            if (!Cities.Any())
+                return;
+
             if (Suburbs.Any())
             {
                 Suburbs.Clear();
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
 
             Suburbs.Add("all suburbs");
@@ -244,7 +257,12 @@ namespace NZSchools.ViewModels
             SelectedSuburb = Suburbs.FirstOrDefault();
         }
 
-        private void Populate<T>(ObservableCollection<T> obv, List<T> collection)
+        private void ExecuteTapSettingsCommand()
+        {
+            _nav.Navigate(Experiences.Settings, null);
+        }
+
+        private void Populate<T>(IList<T> obv, List<T> collection)
         {
             foreach (var c in collection)
                 obv.Add(c);
@@ -252,8 +270,11 @@ namespace NZSchools.ViewModels
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
+            if (Directories.Any())
+                return;
+
             var directories = await _db.GetDirectories();
-            Directories = new List<Directory>(directories);
+            Populate<Directory>(Directories, directories.ToList());
 
             var regions = await _db.GetRegions();
             Regions = new ObservableCollection<Region>(regions);
@@ -268,6 +289,8 @@ namespace NZSchools.ViewModels
 
             Populate<string>(Deciles, directories.GroupBy(x => x.Decile).Select(x => x.Key.ToString()).OrderBy(x => Int32.Parse(x)).ToList());
             SelectedDecile = Deciles.FirstOrDefault();
+
+            base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
         }
     }
 }

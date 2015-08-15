@@ -132,7 +132,8 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Label="settings"
-                          Icon="Setting"/>
+                          Icon="Setting"
+                          Command="{Binding TapSettingsCommand}" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

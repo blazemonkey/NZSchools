@@ -17,6 +17,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageFullPathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Directory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\FileReaderService.cs" />
@@ -30,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SqlLiteService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Data\directories.json" />

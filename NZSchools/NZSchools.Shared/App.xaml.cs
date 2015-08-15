@@ -1,8 +1,10 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
+using NZSchools.Interfaces;
 using NZSchools.Services.FileReaderService;
 using NZSchools.Services.JsonService;
 using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
+using NZSchools.ViewModels;
 using SimpleInjector;
 using System;
 using System.Collections.Generic;
@@ -51,6 +53,7 @@ namespace NZSchools
             Container.Register<IJsonService, JsonService>();
             Container.Register<INavigationService, NavigationService>();
             Container.Register<ISqlLiteService, SqlLiteService>();
+            Container.RegisterSingle<ISettingsPageViewModel, SettingsPageViewModel>();
 
             await Container.GetInstance<SqlLiteService>().ClearLocalDb();
         }

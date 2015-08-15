@@ -19,7 +19,7 @@ namespace NZSchools.Models
             var waikato = new Region() { Id = 3, Name = "waikato", Order = 3, ImagePath = "waikato.png" };
             var bayOfPlenty = new Region() { Id = 4, Name = "bay of plenty", Order = 4, ImagePath = "bayofplenty.png" };
             var gisborne = new Region() { Id = 5, Name = "gisborne", Order = 5, ImagePath = "gisborne.png" };
-            var hawkesbay = new Region() { Id = 6, Name = "hawke's bay", Order = 6, ImagePath = "hawkesbay.png" };
+            var hawkesbay = new Region() { Id = 6, Name = "hawkes bay", Order = 6, ImagePath = "hawkesbay.png" };
             var taranaki = new Region() { Id = 7, Name = "taranaki", Order = 7, ImagePath = "taranaki.png" };
             var manawatu = new Region() { Id = 8, Name = "manawatu-wanganui", Order = 8, ImagePath = "manawatu.png" };
             var wellington = new Region() { Id = 9, Name = "wellington", Order = 9, ImagePath = "wellington.png" };

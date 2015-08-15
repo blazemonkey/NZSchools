@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NZSchools.Services.NavigationService
 {
-    public enum Experiences { Main }
+    public enum Experiences { Main, Settings }
 
     public interface INavigationService
     {
