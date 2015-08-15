@@ -278,7 +278,7 @@ namespace NZSchools.ViewModels
 
             var regions = await _db.GetRegions();
             Regions = new ObservableCollection<Region>(regions);
-            SelectedRegion = Regions.First();
+            SelectedRegion = Regions.FirstOrDefault(x => x.Id == _settings.GetDefaultRegion());
             ExecuteSelectedRegionChangedCommand();
 
             Populate<string>(Genders, directories.GroupBy(x => x.GenderOfStudents.ToLower()).Select(x => x.Key.ToString()).OrderBy(x => x).ToList());

@@ -40,10 +40,29 @@
                                   OnContent="On"
                                   OffContent="Off"
                                   Foreground="Gray"
-                                  Margin="10"/>
+                                  Margin="10"
+                                  IsOn="{Binding Gps, Mode=TwoWay}"/>
                 </Grid>
             </PivotItem>
             <PivotItem Header="about">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               Text="version"
+                               Margin="10"/>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Margin="10"
+                               Foreground="Gray"
+                               Text="{Binding Version}"/>
+                </Grid>
             </PivotItem>
         </Pivot>
     </Grid>

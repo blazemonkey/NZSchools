@@ -6,5 +6,7 @@ namespace NZSchools.Interfaces
 {
     public interface ISettingsPageViewModel
     {
+        int GetDefaultRegion();
+        bool GetGps();
     }
 }
