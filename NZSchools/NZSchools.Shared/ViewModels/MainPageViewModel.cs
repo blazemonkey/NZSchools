@@ -28,6 +28,7 @@ namespace NZSchools.ViewModels
         private ObservableCollection<string> _schoolTypes;
         private ObservableCollection<string> _deciles;
 
+        private string _searchText;
         private Region _selectedRegion;
         private string _selectedCity;
         private string _selectedSuburb;        
@@ -120,6 +121,16 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged("SearchText");
+            }
+        }
+
         public Region SelectedRegion
         {
             get { return _selectedRegion; }
@@ -183,6 +194,7 @@ namespace NZSchools.ViewModels
         public DelegateCommand SelectedRegionChangedCommand { get; set; }
         public DelegateCommand SelectedCityChangedCommand { get; set; }
 
+        public DelegateCommand TapSearchSchoolsCommand { get; set; }
         public DelegateCommand TapSettingsCommand { get; set; }
 
         public MainPageViewModel(ISqlLiteService db, INavigationService nav, ISettingsPageViewModel settings)
@@ -201,6 +213,7 @@ namespace NZSchools.ViewModels
             SelectedRegionChangedCommand = new DelegateCommand(ExecuteSelectedRegionChangedCommand);
             SelectedCityChangedCommand = new DelegateCommand(ExecuteSelectedCityChangedCommand);
 
+            TapSearchSchoolsCommand = new DelegateCommand(ExecuteTapSearchSchoolsCommand);
             TapSettingsCommand = new DelegateCommand(ExecuteTapSettingsCommand);
         }
 
@@ -255,6 +268,32 @@ namespace NZSchools.ViewModels
             }
 
             SelectedSuburb = Suburbs.FirstOrDefault();
+        }
+
+        private void ExecuteTapSearchSchoolsCommand()
+        {
+            var schools = Directories.Where(x => x.RegionalCouncil.ToLower() == SelectedRegion.Name + " region");
+
+            if (!string.IsNullOrEmpty(SearchText))
+                schools = schools.Where(x => x.Name.ToLower().Contains(SearchText.ToLower()));
+
+            if (SelectedCity != "all cities")
+                schools = schools.Where(x => x.City.ToLower() == SelectedCity);
+
+            if (SelectedSuburb != "all suburbs")
+                schools = schools.Where(x => x.Suburb.ToLower() == SelectedSuburb);
+
+            if (SelectedGender != "all genders")
+                schools = schools.Where(x => x.GenderOfStudents.ToLower() == SelectedGender);
+
+            if (SelectedSchoolType != "all school types")
+                schools = schools.Where(x => x.SchoolType.ToLower() == SelectedSchoolType);
+
+            if (SelectedDecile != "all deciles")
+                schools = schools.Where(x => x.Decile == Int32.Parse(SelectedDecile));
+
+            NavigationParameters.Instance.SetParameters(schools.ToList());
+            _nav.Navigate(Experiences.Results);
         }
 
         private void ExecuteTapSettingsCommand()

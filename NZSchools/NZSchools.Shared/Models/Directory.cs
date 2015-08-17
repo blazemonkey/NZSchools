@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -47,5 +48,19 @@ namespace NZSchools.Models
         public int InternationalStudents { get; set; }
         public int ChangeId { get; set; }
         public bool Status { get; set; }
+        [Ignore]
+        public string AddressCombined
+        {
+            get 
+            {
+                var combined = Street;
+                if (!string.IsNullOrEmpty(Suburb))
+                    combined = combined + ", " + Suburb;
+
+                combined = combined + ", " + City;
+
+                return combined;
+            }
+        }                
     }
 }
