@@ -68,8 +68,9 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <Pivot>
-            <PivotItem Header="list">
+        <Pivot x:Name="ResultsPivot"
+            SelectionChanged="Pivot_SelectionChanged">
+            <PivotItem Header="schools">
                 <Grid Margin="10">
                     <SemanticZoom>
                         <SemanticZoom.ZoomedInView>
@@ -93,12 +94,9 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="map">
-                <maps:MapControl x:Name="MapControl">
-                </maps:MapControl>
-            </PivotItem>
-            <PivotItem Header="test">
-                <Grid x:Name="TestGrid">
-                    
+                <Grid>
+                    <maps:MapControl x:Name="MapControl">
+                    </maps:MapControl>
                 </Grid>
             </PivotItem>
         </Pivot>

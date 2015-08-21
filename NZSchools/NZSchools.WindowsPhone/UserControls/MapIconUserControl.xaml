@@ -11,7 +11,7 @@
           Margin="10"
           Height="20"
           Width="40">
-        <TextBlock Text="{Binding Id}"
+        <TextBlock Text="{Binding Directory.SchoolId}"
                    FontWeight="Light"
                    Foreground="White"
                    FontSize="14"

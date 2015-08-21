@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="NZSchools.UserControls.QuickSchoolViewUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NZSchools.UserControls"
+    xmlns:converters="using:NZSchools.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
+    </UserControl.Resources>
+    
+    <Grid x:Name="PopupGrid">
+        <Grid.Background>
+            <SolidColorBrush Color="Black" Opacity="0.7"/>
+        </Grid.Background>
+        <StackPanel Background="White" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="300"
+                    Height="Auto">
+            <StackPanel Background="Black"
+                        Width="300"
+                        Height="Auto">
+                <TextBlock Text="{Binding Directory.SchoolId}"
+                           Margin="10"
+                           FontSize="18"
+                           Foreground="White"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}" 
+                       Foreground="Black"
+                       FontWeight="Light"
+                       FontSize="18"
+                       TextWrapping="Wrap" 
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="10,10,10,0"/>
+            <TextBlock Text="{Binding Directory.AddressCombined, Converter={StaticResource StringToLowerConverter}}" 
+                       Foreground="Gray"
+                       FontWeight="Light"
+                       FontSize="14"
+                       TextWrapping="Wrap" 
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="10,0"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="5">
+                <Button Content="more details"
+                        Background="Black"
+                        Foreground="White"
+                        HorizontalAlignment="Stretch"
+                        Width="Auto"
+                        FontSize="18"
+                        Margin="10">
+                </Button>
+                <Button x:Name="BackToMapButton"
+                        Content="back to map"
+                        Background="Black"
+                        Foreground="White"
+                        HorizontalAlignment="Stretch"
+                        Width="Auto"
+                        FontSize="18"
+                        Margin="10"
+                        Tapped="BackToMapButton_Tapped">
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

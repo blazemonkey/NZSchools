@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageFullPathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToLowerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AlphaKeyGroup.cs" />

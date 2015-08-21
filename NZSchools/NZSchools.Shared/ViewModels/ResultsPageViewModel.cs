@@ -14,8 +14,20 @@ namespace NZSchools.ViewModels
 {
     public class ResultsPageViewModel : ViewModel, IResultsPageViewModel
     {
+        private bool _isLoading;
+
         private ObservableCollection<Directory> _directories;
         private IList<AlphaKeyGroup<Directory>> _grouped;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            private set
+            {
+                _isLoading = value;
+                OnPropertyChanged("IsLoading");
+            }
+        }
 
         public ObservableCollection<Directory> Directories
         {
@@ -40,6 +52,7 @@ namespace NZSchools.ViewModels
         public ResultsPageViewModel()
         {
             Directories = new ObservableCollection<Directory>();
+            IsLoading = true;
         }
 
         public override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
