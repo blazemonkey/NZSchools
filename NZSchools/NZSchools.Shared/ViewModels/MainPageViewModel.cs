@@ -20,6 +20,7 @@ namespace NZSchools.ViewModels
         private INavigationService _nav;
         private ISettingsPageViewModel _settings;
 
+        private bool _isLoading;
         private List<Directory> _directories;
         private ObservableCollection<Region> _regions;
         private ObservableCollection<string> _cities;
@@ -35,6 +36,16 @@ namespace NZSchools.ViewModels
         private string _selectedGender;
         private string _selectedSchoolType;
         private string _selectedDecile;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            private set
+            {
+                _isLoading = value;
+                OnPropertyChanged("IsLoading");
+            }
+        }
 
         public List<Directory> Directories
         {
@@ -312,6 +323,8 @@ namespace NZSchools.ViewModels
             if (Directories.Any())
                 return;
 
+            IsLoading = true;
+
             var directories = await _db.GetDirectories();
             Populate<Directory>(Directories, directories.ToList());
 
@@ -329,6 +342,7 @@ namespace NZSchools.ViewModels
             Populate<string>(Deciles, directories.GroupBy(x => x.Decile).Select(x => x.Key.ToString()).OrderBy(x => Int32.Parse(x)).ToList());
             SelectedDecile = Deciles.FirstOrDefault();
 
+            IsLoading = false;
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
         }
     }

@@ -14,6 +14,7 @@
     Background="{StaticResource AppBackgroundBrush}">
 
     <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:ImageFullPathConverter x:Key="ImageFullPathConverter"/>
     </Page.Resources>
     <Grid>
@@ -21,101 +22,110 @@
             <PivotItem Header="search">
                 <ScrollViewer>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" 
+                        <StackPanel Orientation="Vertical" 
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ProgressBar IsIndeterminate="True" />
+                            <TextBlock Text="loading..."
+                               Margin="0,5,0,0"
+                               HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverse}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" 
                                    Text="school region" 
                                    HorizontalAlignment="Center" 
                                    FontSize="18"
                                    Margin="10"/>
-                        <Button Grid.Row="1" Style="{StaticResource ButtonNoPressedColour}">
-                            <Grid DataContext="{Binding SelectedRegion}">
-                                <Image Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}, ConverterParameter=Regions}" />
-                                <TextBlock Text="{Binding Name}" 
+                            <Button Grid.Row="1" Style="{StaticResource ButtonNoPressedColour}">
+                                <Grid DataContext="{Binding SelectedRegion}">
+                                    <Image Source="{Binding ImagePath, Converter={StaticResource ImageFullPathConverter}, ConverterParameter=Regions}" />
+                                    <TextBlock Text="{Binding Name}" 
                                                    VerticalAlignment="Bottom"
                                                    FontSize="22"
                                                    FontWeight="Light"
                                                    Foreground="White"
                                                    Margin="5"/>
-                            </Grid>
-                            <Button.Flyout>
-                                <ListPickerFlyout ItemsSource="{Binding Regions}" 
+                                </Grid>
+                                <Button.Flyout>
+                                    <ListPickerFlyout ItemsSource="{Binding Regions}" 
                                                   Placement="Full" 
                                                   SelectedValue="{Binding SelectedRegion, Mode=TwoWay}" 
                                                   DisplayMemberPath="Name">
-                                    <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="ItemsPicked">
-                                            <core:InvokeCommandAction Command="{Binding SelectedRegionChangedCommand}" />
-                                        </core:EventTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </ListPickerFlyout>
-                            </Button.Flyout>
-                        </Button>
-                        <Grid Grid.Row="2" Margin="10,0,10,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.35*"/>
-                                <ColumnDefinition Width="0.65*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBox Grid.Row="0" 
+                                        <interactivity:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="ItemsPicked">
+                                                <core:InvokeCommandAction Command="{Binding SelectedRegionChangedCommand}" />
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </ListPickerFlyout>
+                                </Button.Flyout>
+                            </Button>
+                            <Grid Grid.Row="2" Margin="10,0,10,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.35*"/>
+                                    <ColumnDefinition Width="0.65*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBox Grid.Row="0" 
                                  Grid.ColumnSpan="2" 
                                  PlaceholderText="school name"
                                  BorderThickness="1"
                                  Text="{Binding SearchText, Mode=TwoWay}"
                                  Style="{StaticResource AccentTextBoxStyle}"/>
-                            <TextBlock Grid.Row="1" Margin="10" FontSize="18" Text="city" />
-                            <TextBlock Grid.Row="2" Margin="10" FontSize="18" Text="suburb"/>
-                            <TextBlock Grid.Row="3" Margin="10" FontSize="18" Text="gender"/>
-                            <TextBlock Grid.Row="4" Margin="10" FontSize="18" Text="school type"/>
-                            <TextBlock Grid.Row="5" Margin="10" FontSize="18" Text="decile"/>
-                            <ComboBox Grid.Row="1"
+                                <TextBlock Grid.Row="1" Margin="10" FontSize="18" Text="city" />
+                                <TextBlock Grid.Row="2" Margin="10" FontSize="18" Text="suburb"/>
+                                <TextBlock Grid.Row="3" Margin="10" FontSize="18" Text="gender"/>
+                                <TextBlock Grid.Row="4" Margin="10" FontSize="18" Text="school type"/>
+                                <TextBlock Grid.Row="5" Margin="10" FontSize="18" Text="decile"/>
+                                <ComboBox Grid.Row="1"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Cities}"
                                   SelectedValue="{Binding SelectedCity, Mode=TwoWay}"                               
                                   VerticalAlignment="Center"
                                   FontSize="18">
-                                <interactivity:Interaction.Behaviors>
-                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:InvokeCommandAction Command="{Binding SelectedCityChangedCommand}" />
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </ComboBox>
-                            <ComboBox Grid.Row="2"
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectedCityChangedCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ComboBox>
+                                <ComboBox Grid.Row="2"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Suburbs}"
                                   SelectedValue="{Binding SelectedSuburb, Mode=TwoWay}"
                                   VerticalAlignment="Center"
                                   FontSize="18" />
-                            <ComboBox Grid.Row="3"
+                                <ComboBox Grid.Row="3"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Genders}"
                                   SelectedValue="{Binding SelectedGender, Mode=TwoWay}"
                                   VerticalAlignment="Center"
                                   FontSize="18" />
-                            <ComboBox Grid.Row="4"
+                                <ComboBox Grid.Row="4"
                                   Grid.Column="1"
                                   ItemsSource="{Binding SchoolTypes}"
                                   SelectedValue="{Binding SelectedSchoolType, Mode=TwoWay}"
                                   VerticalAlignment="Center"
                                   FontSize="18" />
-                            <ComboBox Grid.Row="5"
+                                <ComboBox Grid.Row="5"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Deciles}"
                                   SelectedValue="{Binding SelectedDecile, Mode=TwoWay}"
                                   VerticalAlignment="Center"
                                   FontSize="18"/>
-                            <Button Grid.Row="6" 
+                                <Button Grid.Row="6" 
                                     Grid.ColumnSpan="2"
                                     Content="search schools"
                                     Background="Black"
@@ -124,7 +134,8 @@
                                     Width="Auto"
                                     FontSize="18"
                                     Command="{Binding TapSearchSchoolsCommand}">
-                            </Button>
+                                </Button>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </ScrollViewer>

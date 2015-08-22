@@ -95,7 +95,8 @@
             </PivotItem>
             <PivotItem Header="map">
                 <Grid>
-                    <maps:MapControl x:Name="MapControl">
+                    <maps:MapControl x:Name="MapControl"
+                                     MapServiceToken="OEuJyPhAIozUMRToS9hrkw">
                     </maps:MapControl>
                 </Grid>
             </PivotItem>
