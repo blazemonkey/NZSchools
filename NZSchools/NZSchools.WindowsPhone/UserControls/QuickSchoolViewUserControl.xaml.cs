@@ -1,4 +1,5 @@
 ﻿using NZSchools.Models;
+using NZSchools.Services.NavigationService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace NZSchools.UserControls
 {
     public sealed partial class QuickSchoolViewUserControl : UserControl
     {
+        private INavigationService _nav;
+        
         public static readonly DependencyProperty DirectoryQuickViewProperty =
             DependencyProperty.Register("Directory", typeof(Directory), typeof(QuickSchoolViewUserControl), null);
 
@@ -37,6 +40,8 @@ namespace NZSchools.UserControls
         public QuickSchoolViewUserControl(Directory directory)
         {
             this.InitializeComponent();
+            _nav = App.Container.GetInstance<NavigationService>();
+
             (this.Content as FrameworkElement).DataContext = this;
 
             PopupGrid.Width = Window.Current.Bounds.Width;
@@ -64,6 +69,13 @@ namespace NZSchools.UserControls
         private void BackToMapButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             BackToMapButtonTapped.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void MoreDetailsButton_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            BackToMapButtonTapped.Invoke(sender, EventArgs.Empty);
+            NavigationParameters.Instance.SetParameters(Directory);
+            _nav.Navigate(Experiences.School);
         }
     }
 }

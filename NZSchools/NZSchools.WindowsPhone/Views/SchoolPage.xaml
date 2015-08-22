@@ -1,0 +1,197 @@
+﻿<Page
+    x:Class="NZSchools.Views.SchoolPage"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NZSchools.Views"
+    xmlns:converters="using:NZSchools.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
+    Background="{ThemeResource AppBackgroundBrush}">
+
+    <Page.Resources>
+        <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
+        <converters:GeopointConverter x:Key="GeopointConverter"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Pivot>
+            <PivotItem Header="general">
+                <ScrollViewer>
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   FontSize="30"
+                                   Margin="10"/>
+                        <Grid Grid.Row="1"
+                              Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.35*"/>
+                                <ColumnDefinition Width="0.65*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="institution no."
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.SchoolId}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="principal"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Principal, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Text="school type"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.SchoolType, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Text="authority"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Authority, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="0"
+                                       Text="gender"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.GenderOfStudents, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="0"
+                                       Text="decile"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Decile, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="6"
+                                       Grid.Column="0"
+                                       Text="definition"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="6"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Definition, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="7"
+                                       Grid.Column="0"
+                                       Text="address"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="7"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.AddressCombined, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="8"
+                                       Grid.Column="0"
+                                       Text="region"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="8"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.RegionalCouncil, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="9"
+                                       Grid.Column="0"
+                                       Text="postal"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="9"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.PostalCombined, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="10"
+                                       Grid.Column="0"
+                                       Text="telephone"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="10"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Telephone, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="11"
+                                       Grid.Column="0"
+                                       Text="fax"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="11"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Fax, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="12"
+                                       Grid.Column="0"
+                                       Text="email"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="12"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.Email, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="13"
+                                       Grid.Column="0"
+                                       Text="website"
+                                       Margin="5"/>
+                            <TextBlock Grid.Row="13"
+                                       Grid.Column="1"
+                                       Text="{Binding Directory.SchoolWebsite, Converter={StaticResource StringToLowerConverter}}"
+                                       Foreground="Gray"
+                                       Margin="5"/>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="map">
+                <maps:MapControl x:Name="MapControl"
+                                 Grid.Row="1"
+                                 MapServiceToken="OEuJyPhAIozUMRToS9hrkw"
+                                 ZoomLevel="16"
+                                 Center="{Binding Directory, Converter={StaticResource GeopointConverter}}">
+                </maps:MapControl>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

@@ -94,6 +94,9 @@
     <Compile Include="Views\ResultsPage.xaml.cs">
       <DependentUpon>ResultsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SchoolPage.xaml.cs">
+      <DependentUpon>SchoolPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ResultsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SchoolPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

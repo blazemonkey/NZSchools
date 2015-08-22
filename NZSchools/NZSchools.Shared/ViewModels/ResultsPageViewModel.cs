@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Helpers;
 using NZSchools.Interfaces;
 using NZSchools.Models;
@@ -14,6 +15,8 @@ namespace NZSchools.ViewModels
 {
     public class ResultsPageViewModel : ViewModel, IResultsPageViewModel
     {
+        private INavigationService _nav;
+
         private bool _isLoading;
 
         private ObservableCollection<Directory> _directories;
@@ -49,14 +52,29 @@ namespace NZSchools.ViewModels
             }
         }
 
-        public ResultsPageViewModel()
+        public DelegateCommand<Directory> TapSchoolCommand { get; set; }
+
+        public ResultsPageViewModel(INavigationService nav)
         {
+            _nav = nav;
+
             Directories = new ObservableCollection<Directory>();
             IsLoading = true;
+
+            TapSchoolCommand = new DelegateCommand<Directory>(ExecuteTapSchoolCommand);
+        }
+
+        public void ExecuteTapSchoolCommand(Directory directory)
+        {
+            NavigationParameters.Instance.SetParameters(directory);
+            _nav.Navigate(Experiences.School);
         }
 
         public override void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
+            if (navigationMode == NavigationMode.Back)
+                return;
+
             Directories.Clear();
             var directories = (List<Directory>)NavigationParameters.Instance.GetParameters();
             foreach (var d in directories)

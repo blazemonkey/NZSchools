@@ -61,6 +61,14 @@ namespace NZSchools.Models
 
                 return combined;
             }
-        }                
+        }
+        [Ignore]
+        public string PostalCombined
+        {
+            get
+            {                
+                return string.Format("{0}, {1}, {2}", PostalAddress1, PostalAddress3, PostalCode);
+            }
+        }
     }
 }

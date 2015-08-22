@@ -48,13 +48,15 @@
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         Margin="5">
-                <Button Content="more details"
+                <Button x:Name="MoreDetailsButton"
+                        Content="more details"
                         Background="Black"
                         Foreground="White"
                         HorizontalAlignment="Stretch"
                         Width="Auto"
                         FontSize="18"
-                        Margin="10">
+                        Margin="10"
+                        Tapped="MoreDetailsButton_Tapped">
                 </Button>
                 <Button x:Name="BackToMapButton"
                         Content="back to map"
