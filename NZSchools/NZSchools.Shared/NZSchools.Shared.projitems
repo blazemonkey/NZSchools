@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISchoolPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Graph.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\AppDataService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\IAppDataService.cs" />

@@ -4,8 +4,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NZSchools.Views"
+    xmlns:charts="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     xmlns:converters="using:NZSchools.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -18,7 +20,8 @@
     </Page.Resources>
     
     <Grid>
-        <Pivot>
+        <Pivot x:Name="MainPivot"
+               SelectionChanged="MainPivot_SelectionChanged">
             <PivotItem Header="general">
                 <ScrollViewer>
                     <Grid Margin="10">
@@ -30,7 +33,7 @@
                                    Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}"
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
-                                   FontSize="30"
+                                   FontSize="36"
                                    Margin="10"/>
                         <Grid Grid.Row="1"
                               Margin="10">
@@ -188,10 +191,171 @@
                 <maps:MapControl x:Name="MapControl"
                                  Grid.Row="1"
                                  MapServiceToken="OEuJyPhAIozUMRToS9hrkw"
-                                 ZoomLevel="16"
-                                 Center="{Binding Directory, Converter={StaticResource GeopointConverter}}">
+                                 ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}"
+                                 Center="{Binding Center, Mode=TwoWay}">
                 </maps:MapControl>
+            </PivotItem>
+            <PivotItem Header="roll">
+                <ScrollViewer>
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.35*"/>
+                                <ColumnDefinition Width="0.35*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="total roll no."
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.TotalSchoolRoll}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="european / pākehā"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.EuropeanPākehā}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="māori"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.Māori}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Text="pasifika"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.Pasifika}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   Text="asian"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.Asian}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="5"
+                                   Grid.Column="0"
+                                   Text="melaa"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="5"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.Melaa}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="6"
+                                   Grid.Column="0"
+                                   Text="other"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="6"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.Other}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="7"
+                                   Grid.Column="0"
+                                   Text="international"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="7"
+                                   Grid.Column="1"
+                                   Text="{Binding Directory.InternationalStudents}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                        </Grid>
+                        <charts:Chart x:Name="PieChart"
+                                      Grid.Row="1"
+                                      Width="Auto" 
+                                      Height="Auto"
+                                      VerticalAlignment="Top"
+                                      BorderBrush="Black"
+                                      BorderThickness="1"
+                                      Title="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}">
+                            <charts:PieSeries IndependentValuePath="Name" 
+                                              DependentValuePath="Number" 
+                                              ItemsSource="{Binding GraphSeries}">
+                                <charts:PieSeries.LegendItemStyle>
+                                    <Style TargetType="charts:LegendItem">
+                                        <Setter Property="IsTabStop"
+                                                Value="False" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="charts:LegendItem">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                            <StackPanel Orientation="Horizontal">
+                                                            <Rectangle Width="8"
+                                                                       Height="8"
+                                                                       Fill="{Binding Background}"
+                                                                       Stroke="{Binding BorderBrush}"
+                                                                       StrokeThickness="1"
+                                                                       Margin="5"  />
+                                                            <datavis:Title Content="{TemplateBinding Content}"
+                                                                           FontWeight="Light"
+                                                                           FontFamily="{ThemeResource PhoneFontFamilyNormal}"
+                                                                           FontSize="14"
+                                                                           VerticalAlignment="Center"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </charts:PieSeries.LegendItemStyle>
+                            </charts:PieSeries>
+                        </charts:Chart>
+                    </Grid>
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="MainCommandBar">
+            <AppBarButton x:Name="CallAppBar"
+                          Label="call" 
+                          Icon="Phone" 
+                          Command="{Binding CallCommand}" />
+            <AppBarButton x:Name="OpenWebsiteAppBar"
+                          Label ="open website" 
+                          Icon="World" 
+                          Command="{Binding OpenWebsiteCommand}"/>
+            <AppBarButton x:Name="ShareAppBar"
+                          Label ="share" 
+                          Icon="ReShare" 
+                          Command="{Binding ShareCommand}"/>
+            <AppBarButton x:Name="CenterMapAppBar"
+                          Label ="center" 
+                          Icon="Target" 
+                          Command="{Binding TapCenterMapCommand}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

@@ -53,7 +53,37 @@ namespace NZSchools.Views
 
             MapControl.Children.Add(icon);            
 
-            MapControl.SetLocation(icon, geopoint);
+            MapControl.SetLocation(icon, geopoint);            
+        }
+
+        private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MainCommandBar.Visibility = Visibility.Visible;
+            CallAppBar.Visibility = Visibility.Collapsed;
+            OpenWebsiteAppBar.Visibility = Visibility.Collapsed;
+            ShareAppBar.Visibility = Visibility.Collapsed;
+            CenterMapAppBar.Visibility = Visibility.Collapsed;
+
+            switch (MainPivot.SelectedIndex)
+            {
+                case 0:
+                    {
+                        CallAppBar.Visibility = Visibility.Visible;
+                        OpenWebsiteAppBar.Visibility = Visibility.Visible;
+                        ShareAppBar.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case 1:
+                    {
+                        CenterMapAppBar.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case 2:
+                    {
+                        MainCommandBar.Visibility = Visibility.Collapsed;
+                    }
+                    break;
+            }
         }
     }
 }
