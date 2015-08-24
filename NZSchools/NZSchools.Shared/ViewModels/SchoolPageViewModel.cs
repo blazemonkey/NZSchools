@@ -3,6 +3,7 @@ using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Interfaces;
 using NZSchools.Models;
 using NZSchools.Services.NavigationService;
+using NZSchools.Services.SqlLiteService;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,10 +18,13 @@ namespace NZSchools.ViewModels
 {
     public class SchoolPageViewModel : ViewModel, ISchoolPageViewModel
     {
+        private ISqlLiteService _sql;
+
         private Directory _directory;
         private List<Graph> _graphSeries;
         private double _zoomLevel;
         private Geopoint _center;
+        private string _favouritesLabel;
         private DataTransferManager _dataTransferManager;
 
         public Directory Directory
@@ -53,6 +57,16 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public string FavouritesLabel
+        {
+            get { return _favouritesLabel; }
+            set
+            {
+                _favouritesLabel = value;
+                OnPropertyChanged("FavouritesLabel");
+            }
+        }
+
         public Geopoint Center
         {
             get { return _center; }
@@ -66,16 +80,20 @@ namespace NZSchools.ViewModels
         public DelegateCommand CallCommand { get; set; }
         public DelegateCommand OpenWebsiteCommand { get; set; }
         public DelegateCommand ShareCommand { get; set; }
+        public DelegateCommand FavouriteCommand { get; set; }
         public DelegateCommand TapCenterMapCommand { get; set; }
 
-        public SchoolPageViewModel()
+        public SchoolPageViewModel(ISqlLiteService sql)
         {
+            _sql = sql;
+
             GraphSeries = new List<Graph>();
             ZoomLevel = 16;            
 
             CallCommand = new DelegateCommand(ExecuteCallCommand);
             OpenWebsiteCommand = new DelegateCommand(ExecuteOpenWebsiteCommand);
             ShareCommand = new DelegateCommand(ExecuteShareCommand);
+            FavouriteCommand = new DelegateCommand(ExecuteFavouriteCommand);
             TapCenterMapCommand = new DelegateCommand(ExecuteTapCenterMapCommand);
 
             _dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -120,6 +138,14 @@ namespace NZSchools.ViewModels
             Center = new Geopoint(position);
         }
 
+        public void ExecuteFavouriteCommand()
+        {
+            Directory.IsFavourites = !Directory.IsFavourites;
+            FavouritesLabel = Directory.IsFavourites == true ? "un-favourite" : "favourite";
+            OnPropertyChanged("Directory");
+            _sql.UpdateFavourites(Directory);
+        }
+
         private void ShareTextHandler(DataTransferManager sender, DataRequestedEventArgs e)
         {
             var request = e.Request;
@@ -147,6 +173,7 @@ namespace NZSchools.ViewModels
             position.Latitude = Directory.Latitude;
             position.Longitude = Directory.Longitude;
             Center = new Geopoint(position);
+            FavouritesLabel = Directory.IsFavourites == true ? "un-favourite" : "favourite";
 
             GraphSeries.Clear();
             GraphSeries.Add(new Graph() { Name = "european / pākehā", Number = Directory.EuropeanPākehā });

@@ -70,10 +70,15 @@ namespace NZSchools.Services.SqlLiteService
             return await _conn.Table<Region>().OrderBy(x => x.Order).ToListAsync();
         }
 
+        public async Task UpdateFavourites(Directory directory)
+        {
+            await _conn.UpdateAsync(directory);
+        }
+
         public async Task ClearLocalDb()
         {
-            //await _conn.DropTableAsync<Directory>();
-            await _conn.DropTableAsync<Region>();
+            // await _conn.DropTableAsync<Directory>();
+            // await _conn.DropTableAsync<Region>();
             await InitDb();
         }
     }

@@ -16,6 +16,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\FavouritesIconConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GeopointConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageFullPathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToLowerConverter.cs" />
@@ -28,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISettingsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Directory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Graph.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Region.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\AppDataService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppDataService\IAppDataService.cs" />

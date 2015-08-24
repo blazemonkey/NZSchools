@@ -17,6 +17,7 @@
     <Page.Resources>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
         <converters:GeopointConverter x:Key="GeopointConverter"/>
+        <converters:FavouritesIconConverter x:Key="FavouritesIconConverter"/>
     </Page.Resources>
     
     <Grid>
@@ -215,8 +216,9 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.35*"/>
-                                <ColumnDefinition Width="0.35*"/>
+                                <ColumnDefinition Width="0.33*"/>
+                                <ColumnDefinition Width="0.33*"/>
+                                <ColumnDefinition Width="0.33*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0"
                                    Grid.Column="0"
@@ -352,6 +354,10 @@
                           Label ="share" 
                           Icon="ReShare" 
                           Command="{Binding ShareCommand}"/>
+            <AppBarButton x:Name="FavouritesAppBar" 
+                          Label="{Binding FavouritesLabel, Mode=TwoWay}"
+                          Icon="{Binding Directory.IsFavourites, Converter={StaticResource FavouritesIconConverter}, Mode=TwoWay}"
+                          Command="{Binding FavouriteCommand}"/>
             <AppBarButton x:Name="CenterMapAppBar"
                           Label ="center" 
                           Icon="Target" 

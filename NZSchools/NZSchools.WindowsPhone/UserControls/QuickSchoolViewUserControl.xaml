@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     
     <Grid x:Name="PopupGrid">
@@ -29,14 +30,24 @@
                            FontSize="18"
                            Foreground="White"/>
             </StackPanel>
-            <TextBlock Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}" 
-                       Foreground="Black"
-                       FontWeight="Light"
-                       FontSize="18"
-                       TextWrapping="Wrap" 
-                       TextAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Margin="10,10,10,0"/>
+            <StackPanel Orientation="Horizontal"
+                        Margin="10,10,10,0"
+                        HorizontalAlignment="Center" >
+                <TextBlock Text="★" 
+                           Foreground="Black"
+                           FontWeight="Light"
+                           FontSize="18"
+                           TextWrapping="Wrap" 
+                           TextAlignment="Center" 
+                           Margin="0,0,2,0"
+                           Visibility="{Binding Directory.IsFavourites, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <TextBlock Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}" 
+                           Foreground="Black"
+                           FontWeight="Light"
+                           FontSize="18"
+                           TextWrapping="Wrap" 
+                           TextAlignment="Center" />
+            </StackPanel>
             <TextBlock Text="{Binding Directory.AddressCombined, Converter={StaticResource StringToLowerConverter}}" 
                        Foreground="Gray"
                        FontWeight="Light"

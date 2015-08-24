@@ -10,5 +10,6 @@ namespace NZSchools.Services.SqlLiteService
     {
         Task<IEnumerable<Directory>> GetDirectories();
         Task<IEnumerable<Region>> GetRegions();
+        Task UpdateFavourites(Directory directory);
     }
 }

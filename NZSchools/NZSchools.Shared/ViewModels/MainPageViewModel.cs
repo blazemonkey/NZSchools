@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using NZSchools.Helpers;
 using NZSchools.Interfaces;
 using NZSchools.Models;
 using NZSchools.Services.NavigationService;
@@ -7,6 +8,7 @@ using NZSchools.Services.SqlLiteService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +38,9 @@ namespace NZSchools.ViewModels
         private string _selectedGender;
         private string _selectedSchoolType;
         private string _selectedDecile;
+
+        private IList<AlphaKeyGroup<Directory>> _grouped;
+        private bool _hasFavourites;
 
         public bool IsLoading
         {
@@ -202,10 +207,31 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public IList<AlphaKeyGroup<Directory>> Grouped
+        {
+            get { return _grouped; }
+            set
+            {
+                _grouped = value;
+                OnPropertyChanged("Grouped");
+            }
+        }
+
+        public bool HasFavourites
+        {
+            get { return _hasFavourites; }
+            set
+            {
+                _hasFavourites = value;
+                OnPropertyChanged("HasFavourites");
+            }
+        }
+
         public DelegateCommand SelectedRegionChangedCommand { get; set; }
         public DelegateCommand SelectedCityChangedCommand { get; set; }
 
         public DelegateCommand TapSearchSchoolsCommand { get; set; }
+        public DelegateCommand<Directory> TapSchoolCommand { get; set; }
         public DelegateCommand TapSettingsCommand { get; set; }
 
         public MainPageViewModel(ISqlLiteService db, INavigationService nav, ISettingsPageViewModel settings)
@@ -225,6 +251,7 @@ namespace NZSchools.ViewModels
             SelectedCityChangedCommand = new DelegateCommand(ExecuteSelectedCityChangedCommand);
 
             TapSearchSchoolsCommand = new DelegateCommand(ExecuteTapSearchSchoolsCommand);
+            TapSchoolCommand = new DelegateCommand<Directory>(ExecuteTapSchoolCommand);
             TapSettingsCommand = new DelegateCommand(ExecuteTapSettingsCommand);
         }
 
@@ -307,6 +334,12 @@ namespace NZSchools.ViewModels
             _nav.Navigate(Experiences.Results);
         }
 
+        public void ExecuteTapSchoolCommand(Directory directory)
+        {
+            NavigationParameters.Instance.SetParameters(directory);
+            _nav.Navigate(Experiences.School);
+        }
+
         private void ExecuteTapSettingsCommand()
         {
             _nav.Navigate(Experiences.Settings, null);
@@ -321,7 +354,11 @@ namespace NZSchools.ViewModels
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             if (Directories.Any())
+            {
+                Grouped = AlphaKeyGroup<Directory>.CreateGroups(Directories.Where(x => x.IsFavourites), CultureInfo.CurrentUICulture, s => s.Name, true);
+                HasFavourites = Grouped.Select(x => x.Count()).Sum() > 0;
                 return;
+            }
 
             IsLoading = true;
 
@@ -342,7 +379,10 @@ namespace NZSchools.ViewModels
             Populate<string>(Deciles, directories.GroupBy(x => x.Decile).Select(x => x.Key.ToString()).OrderBy(x => Int32.Parse(x)).ToList());
             SelectedDecile = Deciles.FirstOrDefault();
 
+            Grouped = AlphaKeyGroup<Directory>.CreateGroups(directories.Where(x => x.IsFavourites), CultureInfo.CurrentUICulture, s => s.Name, true);
+            HasFavourites = Grouped.Select(x => x.Count()).Sum() > 0;
             IsLoading = false;
+
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
         }
     }

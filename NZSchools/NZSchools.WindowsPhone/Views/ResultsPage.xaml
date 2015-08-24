@@ -16,24 +16,11 @@
 
     <Page.Resources>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <controls:PerfectListView x:Key="PerfectListView"/>
         <CollectionViewSource x:Key="DirectoryGroups"
                               Source="{Binding Grouped}"
                               IsSourceGrouped="True"/>
-        <JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
-        <JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
-        <DataTemplate x:Key="JumpTemplate">
-            <Border Padding="5">
-                <Border Background="{Binding Converter={StaticResource BackgroundConverter}}" 
-                        Width="60" Height="60" HorizontalAlignment="Left">
-                    <TextBlock Text="{Binding Group.Key}" 
-                               Foreground="{Binding Converter={StaticResource ForegroundConverter}}" 
-                               FontSize="26" Padding="6" 
-                               FontWeight="Light"
-                               HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                </Border>
-            </Border>
-        </DataTemplate>
         <DataTemplate x:Key="GroupItemTemplate">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
@@ -46,10 +33,17 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="{Binding Name, Converter={StaticResource StringToLowerConverter}}" 
-                           FontWeight="Light"
-                           FontSize="18"
-                           TextWrapping="Wrap" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="★"
+                                   FontWeight="Light"
+                                   FontSize="18"
+                                   Margin="0,0,2,0"
+                                   Visibility="{Binding IsFavourites, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding Name, Converter={StaticResource StringToLowerConverter}}" 
+                               FontWeight="Light"
+                               FontSize="18"
+                               TextWrapping="Wrap" />
+                    </StackPanel>
                     <TextBlock Text="{Binding AddressCombined, Converter={StaticResource StringToLowerConverter}}" 
                            FontWeight="Light"
                            FontSize="14"
@@ -57,15 +51,6 @@
                            TextWrapping="Wrap" />
                 </StackPanel>
             </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="GroupHeaderTemplate">
-            <Border Background="Transparent" Padding="5">
-                <Border Background="Black" BorderBrush="Black" BorderThickness="2" Width="40" 
-                        Height="40" Margin="0,0,18,0" HorizontalAlignment="Left">
-                    <TextBlock Text="{Binding Key}" Foreground="White" FontSize="26" Padding="6"
-                               FontWeight="Light" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                </Border>
-            </Border>
         </DataTemplate>
     </Page.Resources>
     <Grid>

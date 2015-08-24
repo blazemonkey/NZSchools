@@ -48,7 +48,7 @@ namespace NZSchools.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             HardwareButtons.BackPressed += OnBackPressed;
-
+            
             if (e.NavigationMode == NavigationMode.Back)
                 return;
 

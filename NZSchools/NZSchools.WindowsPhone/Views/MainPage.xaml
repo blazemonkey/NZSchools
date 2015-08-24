@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NZSchools"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:controls="using:NZSchools.Controls"
     xmlns:converters="using:NZSchools.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:NZSchools.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
@@ -14,8 +16,37 @@
     Background="{StaticResource AppBackgroundBrush}">
 
     <Page.Resources>
+        <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:ImageFullPathConverter x:Key="ImageFullPathConverter"/>
+        <controls:PerfectListView x:Key="PerfectListView"/>
+        <CollectionViewSource x:Key="DirectoryGroups"
+                              Source="{Binding Grouped}"
+                              IsSourceGrouped="True"/>
+        <DataTemplate x:Key="GroupItemTemplate">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding SchoolId}"
+                           FontWeight="Light"
+                           FontSize="14"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding Name, Converter={StaticResource StringToLowerConverter}}" 
+                           FontWeight="Light"
+                           FontSize="18"
+                           TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding AddressCombined, Converter={StaticResource StringToLowerConverter}}" 
+                           FontWeight="Light"
+                           FontSize="14"
+                           Foreground="Gray"
+                           TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
     <Grid>
         <Pivot>
@@ -139,6 +170,43 @@
                         </Grid>
                     </Grid>
                 </ScrollViewer>
+            </PivotItem>
+            <PivotItem Header="favourites">
+                <Grid Margin="10">
+                    <StackPanel Visibility="{Binding HasFavourites, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverse}">
+                        <TextBlock Text="there are no favourite schools set"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   Margin="10"/>
+                        <TextBlock Text="go to any school and press the ★ button to add it to this list"
+                                   FontSize="16"
+                                   Foreground="Gray"
+                                   HorizontalAlignment="Center"
+                                   Margin="10"/>
+                    </StackPanel>
+                    <SemanticZoom>
+                        <SemanticZoom.ZoomedInView>
+                            <controls:PerfectListView x:Name="SchoolsListView"
+                              IsHoldingEnabled="True"
+                              ItemsSource="{Binding Source={StaticResource DirectoryGroups}}"
+                              ItemTemplate="{StaticResource GroupItemTemplate}"
+                              ContinuumNavigationTransitionInfo.ExitElementContainer="True"
+                              IsItemClickEnabled="True"
+                              helpers:ItemClickCommand.Command="{Binding TapSchoolCommand}"
+                              Visibility="{Binding HasFavourites, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <controls:PerfectListView.GroupStyle>
+                                    <GroupStyle HidesIfEmpty="True" HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
+                                </controls:PerfectListView.GroupStyle>
+                            </controls:PerfectListView>
+                        </SemanticZoom.ZoomedInView>
+                        <SemanticZoom.ZoomedOutView>
+                            <GridView Background="Black" 
+                              ItemsSource="{Binding Source={StaticResource DirectoryGroups}, Path=CollectionGroups}"
+                              ItemTemplate="{StaticResource JumpTemplate}">
+                            </GridView>
+                        </SemanticZoom.ZoomedOutView>
+                    </SemanticZoom>
+                </Grid>
             </PivotItem>
         </Pivot>
     </Grid>

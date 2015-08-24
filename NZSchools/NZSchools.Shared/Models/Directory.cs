@@ -5,8 +5,11 @@ using System.Text;
 
 namespace NZSchools.Models
 {
-    public class Directory
+    public class Directory : ModelBase
     {
+        private bool _isFavourites;
+
+        [PrimaryKey]
         public int Id { get; set; }
         public int SchoolId { get; set; }
         public string Name { get; set; }
@@ -48,6 +51,15 @@ namespace NZSchools.Models
         public int InternationalStudents { get; set; }
         public int ChangeId { get; set; }
         public bool Status { get; set; }
+        public bool IsFavourites 
+        {
+            get { return _isFavourites; }
+            set
+            {
+                _isFavourites = value;
+                RaisePropertyChanged("IsFavourites");
+            }
+        }
         [Ignore]
         public string AddressCombined
         {
