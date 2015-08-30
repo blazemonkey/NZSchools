@@ -21,6 +21,9 @@ namespace NZSchools.Services.AppDataService
         {
             InsertIntoAppDataContainer("DefaultRegion", 1);
             InsertIntoAppDataContainer("GPS", true);
+            InsertIntoAppDataContainer("DefaultDistance", "1 km");
+            InsertIntoAppDataContainer("LastLatitude", 0.0);
+            InsertIntoAppDataContainer("LastLongitude", 0.0);
         }
 
         private void InsertIntoAppDataContainer(string key, object value)

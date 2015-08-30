@@ -15,9 +15,12 @@
     Background="{ThemeResource AppBackgroundBrush}">
 
     <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
         <converters:GeopointConverter x:Key="GeopointConverter"/>
         <converters:FavouritesIconConverter x:Key="FavouritesIconConverter"/>
+        <converters:LockIconConverter x:Key="LockIconConverter"/>
+        <converters:PercentFormatConverter x:Key="PercentFormatConverter"/>
     </Page.Resources>
     
     <Grid>
@@ -189,12 +192,16 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="map">
-                <maps:MapControl x:Name="MapControl"
-                                 Grid.Row="1"
-                                 MapServiceToken="OEuJyPhAIozUMRToS9hrkw"
-                                 ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}"
-                                 Center="{Binding Center, Mode=TwoWay}">
-                </maps:MapControl>
+                <Grid>
+                    <maps:MapControl x:Name="MapControl"
+                                     Grid.Row="1"
+                                     MapServiceToken="OEuJyPhAIozUMRToS9hrkw"
+                                     ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}"
+                                     Center="{Binding Center, Mode=TwoWay}">
+                    </maps:MapControl>
+                    <Canvas Background="Black" Opacity="0.01"
+                            Visibility="{Binding IsMapLocked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
             </PivotItem>
             <PivotItem Header="roll">
                 <ScrollViewer>
@@ -238,6 +245,11 @@
                                    Text="{Binding Directory.EuropeanPākehā}"
                                    Foreground="Gray"
                                    Margin="5"/>
+                            <TextBlock Grid.Row="1"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.EuropeanPākehāPercent, Converter={StaticResource PercentFormatConverter}}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
                             <TextBlock Grid.Row="2"
                                    Grid.Column="0"
                                    Text="māori"
@@ -245,6 +257,11 @@
                             <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    Text="{Binding Directory.Māori}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="2"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.MāoriPercent, Converter={StaticResource PercentFormatConverter}}"
                                    Foreground="Gray"
                                    Margin="5"/>
                             <TextBlock Grid.Row="3"
@@ -256,6 +273,11 @@
                                    Text="{Binding Directory.Pasifika}"
                                    Foreground="Gray"
                                    Margin="5"/>
+                            <TextBlock Grid.Row="3"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.PasifikaPercent, Converter={StaticResource PercentFormatConverter}}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
                             <TextBlock Grid.Row="4"
                                    Grid.Column="0"
                                    Text="asian"
@@ -263,6 +285,11 @@
                             <TextBlock Grid.Row="4"
                                    Grid.Column="1"
                                    Text="{Binding Directory.Asian}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="4"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.AsianPercent, Converter={StaticResource PercentFormatConverter}}"
                                    Foreground="Gray"
                                    Margin="5"/>
                             <TextBlock Grid.Row="5"
@@ -274,6 +301,11 @@
                                    Text="{Binding Directory.Melaa}"
                                    Foreground="Gray"
                                    Margin="5"/>
+                            <TextBlock Grid.Row="5"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.MelaaPercent, Converter={StaticResource PercentFormatConverter}}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
                             <TextBlock Grid.Row="6"
                                    Grid.Column="0"
                                    Text="other"
@@ -283,6 +315,11 @@
                                    Text="{Binding Directory.Other}"
                                    Foreground="Gray"
                                    Margin="5"/>
+                            <TextBlock Grid.Row="6"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.OtherPercent, Converter={StaticResource PercentFormatConverter}}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
                             <TextBlock Grid.Row="7"
                                    Grid.Column="0"
                                    Text="international"
@@ -290,6 +327,11 @@
                             <TextBlock Grid.Row="7"
                                    Grid.Column="1"
                                    Text="{Binding Directory.InternationalStudents}"
+                                   Foreground="Gray"
+                                   Margin="5"/>
+                            <TextBlock Grid.Row="7"
+                                   Grid.Column="2"
+                                   Text="{Binding Directory.InternationalStudentsPercent, Converter={StaticResource PercentFormatConverter}}"
                                    Foreground="Gray"
                                    Margin="5"/>
                         </Grid>
@@ -358,6 +400,13 @@
                           Label="{Binding FavouritesLabel, Mode=TwoWay}"
                           Icon="{Binding Directory.IsFavourites, Converter={StaticResource FavouritesIconConverter}, Mode=TwoWay}"
                           Command="{Binding FavouriteCommand}"/>
+            <AppBarButton x:Name="LockMapAppBar"
+                          Label="{Binding IsMapLockedLabel}"
+                          Command="{Binding TapLockMapCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="{Binding IsMapLocked, Converter={StaticResource LockIconConverter}}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton x:Name="CenterMapAppBar"
                           Label ="center" 
                           Icon="Target" 

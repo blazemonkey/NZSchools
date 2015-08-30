@@ -3,6 +3,8 @@ using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Helpers;
 using NZSchools.Interfaces;
 using NZSchools.Models;
+using NZSchools.Services.AppDataService;
+using NZSchools.Services.MessengerService;
 using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
 using System;
@@ -10,8 +12,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Reactive.Threading;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Navigation;
 
 namespace NZSchools.ViewModels
@@ -20,6 +27,8 @@ namespace NZSchools.ViewModels
     {
         private ISqlLiteService _db;
         private INavigationService _nav;
+        private IAppDataService _appData;
+        private IMessengerService _msg;
         private ISettingsPageViewModel _settings;
 
         private bool _isLoading;
@@ -34,13 +43,24 @@ namespace NZSchools.ViewModels
         private string _searchText;
         private Region _selectedRegion;
         private string _selectedCity;
-        private string _selectedSuburb;        
+        private string _selectedSuburb;
         private string _selectedGender;
         private string _selectedSchoolType;
         private string _selectedDecile;
 
         private IList<AlphaKeyGroup<Directory>> _grouped;
         private bool _hasFavourites;
+
+        private bool _isMapLocked;
+        private IDisposable _statusChanged;
+        private IDisposable _positionChanged;
+        private double _lastPositionLatitude;
+        private double _lastPositionLongitude;
+        private bool _gpsState;
+        private Geolocator _geolocator;
+        private Geopoint _center;
+        private double _zoomLevel;
+        private List<Directory> _nearbySchools;
 
         public bool IsLoading
         {
@@ -227,17 +247,129 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public bool IsMapLocked
+        {
+            get { return _isMapLocked; }
+            set
+            {
+                _isMapLocked = value;
+                OnPropertyChanged("IsMapLocked");
+                OnPropertyChanged("IsMapLockedLabel");
+            }
+        }
+
+        public string IsMapLockedLabel
+        {
+            get { return IsMapLocked ? "unlock" : "lock"; }
+        }
+
+        public IDisposable StatusChanged
+        {
+            get { return _statusChanged; }
+            private set
+            {
+                _statusChanged = value;
+                OnPropertyChanged("StatusChanged");
+            }
+        }
+
+        public IDisposable PositionChanged
+        {
+            get { return _positionChanged; }
+            private set
+            {
+                _positionChanged = value;
+                OnPropertyChanged("PositionChanged");
+            }
+        }
+
+        public bool GpsState
+        {
+            get { return _gpsState; }
+            set
+            {
+                _gpsState = value;
+                OnPropertyChanged("GpsState");
+            }
+        }
+
+        public double LastPositionLatitude
+        {
+            get { return _lastPositionLatitude; }
+            set
+            {
+                _lastPositionLatitude = value;
+                OnPropertyChanged("LastPositionLatitude");
+            }
+        }
+
+        public double LastPositionLongitude
+        {
+            get { return _lastPositionLongitude; }
+            set
+            {
+                _lastPositionLongitude = value;
+                OnPropertyChanged("LastPositionLongitude");
+            }
+        }
+
+        public Geolocator Geolocator
+        {
+            get { return _geolocator; }
+            private set
+            {
+                _geolocator = value;
+                OnPropertyChanged("Geolocator");
+            }
+        }
+
+        public Geopoint Center
+        {
+            get { return _center; }
+            set
+            {
+                _center = value;
+                OnPropertyChanged("Center");
+            }
+        }
+
+        public double ZoomLevel
+        {
+            get { return _zoomLevel; }
+            set
+            {
+                _zoomLevel = value;
+                OnPropertyChanged("ZoomLevel");
+            }
+        }
+
+        public List<Directory> NearbySchools
+        {
+            get { return _nearbySchools; }
+            set
+            {
+                _nearbySchools = value;
+                OnPropertyChanged("NearbySchools");
+            }
+        }
+
         public DelegateCommand SelectedRegionChangedCommand { get; set; }
         public DelegateCommand SelectedCityChangedCommand { get; set; }
 
         public DelegateCommand TapSearchSchoolsCommand { get; set; }
         public DelegateCommand<Directory> TapSchoolCommand { get; set; }
         public DelegateCommand TapSettingsCommand { get; set; }
+        public DelegateCommand TapLockMapCommand { get; set; }
+        public DelegateCommand TapNearbyListCommand { get; set; }
+        public DelegateCommand TapCenterMapCommand { get; set; }
 
-        public MainPageViewModel(ISqlLiteService db, INavigationService nav, ISettingsPageViewModel settings)
+        public MainPageViewModel(ISqlLiteService db, INavigationService nav, IAppDataService appData, IMessengerService msg,
+            ISettingsPageViewModel settings)
         {
             _db = db;
             _nav = nav;
+            _appData = appData;
+            _msg = msg;
             _settings = settings;
 
             Directories = new List<Directory>();
@@ -247,12 +379,78 @@ namespace NZSchools.ViewModels
             SchoolTypes = new ObservableCollection<string>();
             Deciles = new ObservableCollection<string>();
 
+            IsMapLocked = true;
+
             SelectedRegionChangedCommand = new DelegateCommand(ExecuteSelectedRegionChangedCommand);
             SelectedCityChangedCommand = new DelegateCommand(ExecuteSelectedCityChangedCommand);
 
             TapSearchSchoolsCommand = new DelegateCommand(ExecuteTapSearchSchoolsCommand);
             TapSchoolCommand = new DelegateCommand<Directory>(ExecuteTapSchoolCommand);
             TapSettingsCommand = new DelegateCommand(ExecuteTapSettingsCommand);
+            TapLockMapCommand = new DelegateCommand(ExecuteTapLockMapCommand);
+            TapNearbyListCommand = new DelegateCommand(ExecuteTapNearbyListCommand);
+            TapCenterMapCommand = new DelegateCommand(ExecuteTapCenterMapCommand);           
+        }
+
+        private void UpdateStatusChanged(EventPattern<StatusChangedEventArgs> e)
+        {
+            if (e.EventArgs.Status == PositionStatus.Ready)
+                GpsState = true;
+            else
+                GpsState = false;
+
+            _msg.Send<Geopoint>(Center, "PositionChanged");
+        }
+
+        private void UpdatePositionChanged(EventPattern<PositionChangedEventArgs> e)
+        {
+            LastPositionLatitude = e.EventArgs.Position.Coordinate.Point.Position.Latitude;
+            LastPositionLongitude = e.EventArgs.Position.Coordinate.Point.Position.Longitude;
+            System.Diagnostics.Debug.WriteLine(string.Format("Latitude: {0}, Longitude: {1}",
+                LastPositionLatitude, LastPositionLongitude));
+
+            var position = new BasicGeoposition();
+            position.Latitude = LastPositionLatitude;
+            position.Longitude = LastPositionLongitude;
+            Center = new Geopoint(position);
+            ZoomLevel = 16;
+
+            _appData.UpdateSettingsKeyValue<double>("LastLatitude", position.Latitude);
+            _appData.UpdateSettingsKeyValue<double>("LastLongitude", position.Longitude);
+
+            NearbySchools = new List<Directory>(SchoolsWithinsSquare(Center));
+            _msg.Send<Geopoint>(Center, "PositionChanged");
+            _msg.Send<IEnumerable<Directory>>(NearbySchools, "NearbySchoolsChanged");
+        }
+
+        private IEnumerable<Directory> SchoolsWithinsSquare(Geopoint center)
+        {
+            var defaultDistance = _settings.GetDefaultDistance();
+            var distance = 0.0;
+
+            switch (defaultDistance)
+            {
+                case "500 m":
+                    distance = 0.0025;
+                    break;
+                case "1 km":
+                    distance = 0.0050;
+                    break;
+                case "2 km":
+                    distance = 0.0100;
+                    break;
+                case "5 km":
+                    distance = 0.0250;
+                    break;
+            }
+
+            var directories = Directories.Where(x => x.Latitude != 0.0 && x.Longitude != 0.0)
+                        .Where(x => (x.Longitude <= center.Position.Longitude + distance) &&
+                        (x.Longitude >= center.Position.Longitude - distance) &&
+                        (x.Latitude <= center.Position.Latitude + distance) &&
+                        (x.Latitude >= center.Position.Latitude - distance));
+
+            return directories;
         }
 
         private async void ExecuteSelectedRegionChangedCommand()
@@ -263,7 +461,7 @@ namespace NZSchools.ViewModels
                 // no joke, without this task delay it doesn't work
                 // bloody cost me till 2am! 
                 // http://stackoverflow.com/questions/28199771/universal-app-loading-combobox-itemssource-async-gives-weird-behaviour
-                await Task.Delay(50);                                                   
+                await Task.Delay(50);
             }
 
             Cities.Add("all cities");
@@ -345,6 +543,26 @@ namespace NZSchools.ViewModels
             _nav.Navigate(Experiences.Settings, null);
         }
 
+        private void ExecuteTapLockMapCommand()
+        {
+            IsMapLocked = !IsMapLocked;
+        }
+
+        public void ExecuteTapNearbyListCommand()
+        {
+            NavigationParameters.Instance.SetParameters(NearbySchools);
+            _nav.Navigate(Experiences.Results);
+        }
+
+        public void ExecuteTapCenterMapCommand()
+        {
+            ZoomLevel = 16;
+            var position = new BasicGeoposition();
+            position.Latitude = LastPositionLatitude;
+            position.Longitude = LastPositionLongitude;
+            Center = new Geopoint(position);
+        }
+
         private void Populate<T>(IList<T> obv, List<T> collection)
         {
             foreach (var c in collection)
@@ -353,6 +571,44 @@ namespace NZSchools.ViewModels
 
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
+            var lastLatitude = _appData.GetSettingsKeyValue<double>("LastLatitude");
+            var lastLongitude = _appData.GetSettingsKeyValue<double>("LastLongitude");
+
+            if (_settings.GetGps())
+            {
+                Geolocator = new Geolocator();
+                Geolocator.DesiredAccuracy = PositionAccuracy.High;
+                Geolocator.MovementThreshold = 10;
+
+                StatusChanged = Observable.FromEventPattern<StatusChangedEventArgs>(Geolocator, "StatusChanged")
+                    .ObserveOnDispatcher()
+                    .Do(x => UpdateStatusChanged(x)).Subscribe();
+                PositionChanged = Observable.FromEventPattern<PositionChangedEventArgs>(Geolocator, "PositionChanged")
+                    .ObserveOnDispatcher()
+                    .Do(x => UpdatePositionChanged(x)).Subscribe();
+
+                if (lastLatitude == 0.0 && lastLongitude == 0.0)
+                    ZoomLevel = 2;
+                else
+                {
+                    ZoomLevel = 16;
+                    LastPositionLatitude = lastLatitude;
+                    LastPositionLongitude = lastLongitude;
+                    var position = new BasicGeoposition();
+                    position.Latitude = LastPositionLatitude;
+                    position.Longitude = LastPositionLongitude;
+                    Center = new Geopoint(position);
+
+                    _msg.Send<Geopoint>(Center, "PositionChanged");
+                }
+            }
+            else
+            {
+                Geolocator = null;
+                GpsState = false;
+                _msg.Send<Geopoint>(Center, "PositionChanged");
+            }
+
             if (Directories.Any())
             {
                 Grouped = AlphaKeyGroup<Directory>.CreateGroups(Directories.Where(x => x.IsFavourites), CultureInfo.CurrentUICulture, s => s.Name, true);
@@ -384,6 +640,17 @@ namespace NZSchools.ViewModels
             IsLoading = false;
 
             base.OnNavigatedTo(navigationParameter, navigationMode, viewModelState);
+        }
+
+        public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
+        {
+            if (StatusChanged != null)
+                StatusChanged.Dispose();
+
+            if (PositionChanged != null)
+                PositionChanged.Dispose();
+
+            base.OnNavigatedFrom(viewModelState, suspending);
         }
     }
 }

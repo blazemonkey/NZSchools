@@ -10,8 +10,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="using:NZSchools.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
+    xmlns:usrctrs="using:NZSchools.UserControls"
     mc:Ignorable="d"
     Background="{StaticResource AppBackgroundBrush}">
 
@@ -19,6 +21,7 @@
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:ImageFullPathConverter x:Key="ImageFullPathConverter"/>
+        <converters:LockIconConverter x:Key="LockIconConverter"/>
         <controls:PerfectListView x:Key="PerfectListView"/>
         <CollectionViewSource x:Key="DirectoryGroups"
                               Source="{Binding Grouped}"
@@ -49,7 +52,8 @@
         </DataTemplate>
     </Page.Resources>
     <Grid>
-        <Pivot>
+        <Pivot x:Name="MainPivot"
+               SelectionChanged="MainPivot_SelectionChanged">
             <PivotItem Header="search">
                 <ScrollViewer>
                     <Grid>
@@ -208,13 +212,40 @@
                     </SemanticZoom>
                 </Grid>
             </PivotItem>
+            <PivotItem Header="nearby">
+                <Grid>
+                    <maps:MapControl x:Name="MapControl"
+                                     MapServiceToken="OEuJyPhAIozUMRToS9hrkw"
+                                     Center="{Binding Center, Mode=TwoWay}"
+                                     ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}">
+                    </maps:MapControl>
+                    <Canvas Background="Black" Opacity="0.01"
+                            Visibility="{Binding IsMapLocked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </PivotItem>
         </Pivot>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Label="settings"
+            <AppBarButton x:Name="SettingsAppBar"
+                          Label="settings"
                           Icon="Setting"
                           Command="{Binding TapSettingsCommand}" />
+            <AppBarButton x:Name="NearbySchoolsAppBar"
+                          Label ="nearby list" 
+                          Icon="List" 
+                          Command="{Binding TapNearbyListCommand}"/>
+            <AppBarButton x:Name="LockMapAppBar"
+                          Label="{Binding IsMapLockedLabel}"
+                          Command="{Binding TapLockMapCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="{Binding IsMapLocked, Converter={StaticResource LockIconConverter}}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="CenterMapAppBar"
+                          Label ="center" 
+                          Icon="Target" 
+                          Command="{Binding TapCenterMapCommand}"/>
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

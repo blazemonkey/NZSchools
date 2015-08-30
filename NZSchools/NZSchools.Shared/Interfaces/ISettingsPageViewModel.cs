@@ -8,5 +8,6 @@ namespace NZSchools.Interfaces
     {
         int GetDefaultRegion();
         bool GetGps();
+        string GetDefaultDistance();
     }
 }

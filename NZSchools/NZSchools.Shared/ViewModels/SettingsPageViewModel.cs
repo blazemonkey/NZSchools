@@ -22,6 +22,8 @@ namespace NZSchools.ViewModels
         private ObservableCollection<Region> _regions;
         private Region _selectedRegion;
         private bool _gps;
+        private ObservableCollection<string> _distances;
+        private string _selectedDistance;
         private string _version;
 
         public ObservableCollection<Region> Regions
@@ -58,6 +60,28 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public ObservableCollection<string> Distances
+        {
+            get { return _distances; }
+            private set
+            {
+                _distances = value;
+                OnPropertyChanged("Distances");
+            }
+        }
+
+        public string SelectedDistance
+        {
+            get { return _selectedDistance; }
+            set
+            {
+                _selectedDistance = value;
+                OnPropertyChanged("SelectedDistance");
+
+                _appData.UpdateSettingsKeyValue<string>("DefaultDistance", SelectedDistance);
+            }
+        }
+
         public string Version
         {
             get { return _version; }
@@ -74,6 +98,11 @@ namespace NZSchools.ViewModels
             _db = db;
 
             Regions = new ObservableCollection<Region>();
+            Distances = new ObservableCollection<string>();
+            Distances.Add("500 m");
+            Distances.Add("1 km");
+            Distances.Add("2 km");
+            Distances.Add("5 km");
         }
 
         public int GetDefaultRegion()
@@ -86,6 +115,11 @@ namespace NZSchools.ViewModels
             return _appData.GetSettingsKeyValue<bool>("GPS");
         }
 
+        public string GetDefaultDistance()
+        {
+            return _appData.GetSettingsKeyValue<string>("DefaultDistance");
+        }
+
         public override async void OnNavigatedTo(object navigationParameter, NavigationMode navigationMode, Dictionary<string, object> viewModelState)
         {
             var regions = await _db.GetRegions();
@@ -96,8 +130,9 @@ namespace NZSchools.ViewModels
 
             var defaultRegion = _appData.GetSettingsKeyValue<int>("DefaultRegion");
             SelectedRegion = Regions.FirstOrDefault(x => x.Id == defaultRegion);
+            SelectedDistance = _appData.GetSettingsKeyValue<string>("DefaultDistance");
 
-            Gps = _appData.GetSettingsKeyValue<bool>("GPS");
+            Gps = _appData.GetSettingsKeyValue<bool>("GPS");            
 
             var file = await Package.Current.InstalledLocation.GetFileAsync("AppxManifest.xml");
             var appVersion = XDocument.Load("AppxManifest.xml").Root.Elements().Where(x => x.Name.LocalName == "Identity")

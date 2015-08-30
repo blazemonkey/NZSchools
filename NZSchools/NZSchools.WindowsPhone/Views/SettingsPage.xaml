@@ -21,12 +21,16 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Text="default region"
                                Margin="10"/>
                     <TextBlock Grid.Row="1"
                                Text="gps"
+                               Margin="10"/>
+                    <TextBlock Grid.Row="2"
+                               Text="nearby distance range"
                                Margin="10"/>
                     <ComboBox Grid.Row="0"
                                   Grid.Column="1"
@@ -42,6 +46,12 @@
                                   Foreground="Gray"
                                   Margin="10"
                                   IsOn="{Binding Gps, Mode=TwoWay}"/>
+                    <ComboBox Grid.Row="2"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Distances}"
+                                  SelectedValue="{Binding SelectedDistance, Mode=TwoWay}"
+                                  VerticalAlignment="Center"
+                                  FontSize="18" />
                 </Grid>
             </PivotItem>
             <PivotItem Header="about">

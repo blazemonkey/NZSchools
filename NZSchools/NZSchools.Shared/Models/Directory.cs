@@ -42,13 +42,41 @@ namespace NZSchools.Models
         public double Latitude { get; set; }
         public int Decile { get; set; }
         public int TotalSchoolRoll { get; set; }
-        public int EuropeanPākehā { get; set; }
+        public int EuropeanPākehā { get; set; }        
+        public double EuropeanPākehāPercent
+        {
+            get { return Math.Round(((double)((double)EuropeanPākehā / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int Māori { get; set; }
+        public double MāoriPercent
+        {
+            get { return Math.Round(((double)((double)Māori / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int Pasifika { get; set; }
+        public double PasifikaPercent
+        {
+            get { return Math.Round(((double)((double)Pasifika / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int Asian { get; set; }
+        public double AsianPercent
+        {
+            get { return Math.Round(((double)((double)Asian / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int Melaa { get; set; }
+        public double MelaaPercent
+        {
+            get { return Math.Round(((double)((double)Melaa / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int Other { get; set; }
+        public double OtherPercent
+        {
+            get { return Math.Round(((double)((double)Other / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int InternationalStudents { get; set; }
+        public double InternationalStudentsPercent
+        {
+            get { return Math.Round(((double)((double)InternationalStudents / (double)TotalSchoolRoll)) * 100, 2); }
+        }
         public int ChangeId { get; set; }
         public bool Status { get; set; }
         public bool IsFavourites 

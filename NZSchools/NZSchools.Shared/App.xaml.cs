@@ -3,6 +3,7 @@ using NZSchools.Interfaces;
 using NZSchools.Services.AppDataService;
 using NZSchools.Services.FileReaderService;
 using NZSchools.Services.JsonService;
+using NZSchools.Services.MessengerService;
 using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
 using NZSchools.ViewModels;
@@ -53,6 +54,7 @@ namespace NZSchools
             Container.Register<IAppDataService, AppDataService>();
             Container.Register<IFileReaderService, FileReaderService>();
             Container.Register<IJsonService, JsonService>();
+            Container.Register<IMessengerService, MessengerService>();
             Container.Register<INavigationService, NavigationService>();
             Container.Register<ISqlLiteService, SqlLiteService>();
             Container.RegisterSingle<ISettingsPageViewModel, SettingsPageViewModel>();

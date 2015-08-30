@@ -80,6 +80,22 @@ namespace NZSchools.Views
                 return;
 
             var pivot = (Pivot)sender;
+            MainCommandBar.Visibility = Visibility.Visible;
+            LockMapAppBar.Visibility = Visibility.Collapsed;
+            switch (pivot.SelectedIndex)
+            {
+                case 0:
+                    {
+                        MainCommandBar.Visibility = Visibility.Collapsed;
+                        break;
+                    }
+                case 1:
+                    {
+                        LockMapAppBar.Visibility = Visibility.Visible;
+                        break;
+                    }
+            }
+
             if (pivot.SelectedIndex == 1)
             {
                 if (MapControl.Children.Any())
@@ -139,6 +155,9 @@ namespace NZSchools.Views
             var mapWidth = MapControl.ActualWidth;
             var mapHeight = MapControl.ActualHeight;
             if (mapWidth == 0 || mapHeight == 0)
+                return;
+
+            if (positions.Count() == 0)
                 return;
 
             if (positions.Count() == 1)

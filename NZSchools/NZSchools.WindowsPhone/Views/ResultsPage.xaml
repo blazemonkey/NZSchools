@@ -17,6 +17,7 @@
     <Page.Resources>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:LockIconConverter x:Key="LockIconConverter"/>
         <controls:PerfectListView x:Key="PerfectListView"/>
         <CollectionViewSource x:Key="DirectoryGroups"
                               Source="{Binding Grouped}"
@@ -58,6 +59,20 @@
             SelectionChanged="Pivot_SelectionChanged">
             <PivotItem Header="schools">
                 <Grid Margin="10">
+                    <StackPanel Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverse}">
+                        <TextBlock Text="no schools found"
+                                   FontSize="20"
+                                   HorizontalAlignment="Center"
+                                   Margin="10"/>
+                        <TextBlock Text="if you got here via searching schools, amend the criterias and try again"
+                                   FontSize="16"
+                                   Foreground="Gray"                                   
+                                   Margin="10"/>
+                        <TextBlock Text="if you got here via finding nearby schools, take a look at the settings and change the default nearby distance range"
+                                   FontSize="16"
+                                   Foreground="Gray"                                   
+                                   Margin="10"/>
+                    </StackPanel>
                     <SemanticZoom>
                         <SemanticZoom.ZoomedInView>
                             <controls:PerfectListView x:Name="SchoolsListView"
@@ -66,7 +81,8 @@
                               ItemTemplate="{StaticResource GroupItemTemplate}"
                               ContinuumNavigationTransitionInfo.ExitElementContainer="True"
                               IsItemClickEnabled="True"
-                              helpers:ItemClickCommand.Command="{Binding TapSchoolCommand}">
+                              helpers:ItemClickCommand.Command="{Binding TapSchoolCommand}"
+                              Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <controls:PerfectListView.GroupStyle>
                                     <GroupStyle HidesIfEmpty="True" HeaderTemplate="{StaticResource GroupHeaderTemplate}"/>
                                 </controls:PerfectListView.GroupStyle>
@@ -86,8 +102,21 @@
                     <maps:MapControl x:Name="MapControl"
                                      MapServiceToken="OEuJyPhAIozUMRToS9hrkw">
                     </maps:MapControl>
+                    <Canvas Background="Black" Opacity="0.01"
+                            Visibility="{Binding IsMapLocked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </Grid>
             </PivotItem>
         </Pivot>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar x:Name="MainCommandBar">
+            <AppBarButton x:Name="LockMapAppBar"
+                          Label="{Binding IsMapLockedLabel}"
+                          Command="{Binding TapLockMapCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="{Binding IsMapLocked, Converter={StaticResource LockIconConverter}}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

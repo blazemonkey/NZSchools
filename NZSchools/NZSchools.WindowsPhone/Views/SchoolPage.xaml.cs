@@ -63,6 +63,7 @@ namespace NZSchools.Views
             OpenWebsiteAppBar.Visibility = Visibility.Collapsed;
             ShareAppBar.Visibility = Visibility.Collapsed;
             FavouritesAppBar.Visibility = Visibility.Collapsed;
+            LockMapAppBar.Visibility = Visibility.Collapsed;
             CenterMapAppBar.Visibility = Visibility.Collapsed;
 
             switch (MainPivot.SelectedIndex)
@@ -77,6 +78,7 @@ namespace NZSchools.Views
                     break;
                 case 1:
                     {
+                        LockMapAppBar.Visibility = Visibility.Visible;
                         CenterMapAppBar.Visibility = Visibility.Visible;
                     }
                     break;

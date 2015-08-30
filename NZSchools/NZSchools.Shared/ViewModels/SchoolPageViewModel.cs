@@ -26,6 +26,7 @@ namespace NZSchools.ViewModels
         private Geopoint _center;
         private string _favouritesLabel;
         private DataTransferManager _dataTransferManager;
+        private bool _isMapLocked;
 
         public Directory Directory
         {
@@ -77,10 +78,27 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public bool IsMapLocked
+        {
+            get { return _isMapLocked; }
+            set
+            {
+                _isMapLocked = value;
+                OnPropertyChanged("IsMapLocked");
+                OnPropertyChanged("IsMapLockedLabel");
+            }
+        }
+
+        public string IsMapLockedLabel
+        {
+            get { return IsMapLocked ? "unlock" : "lock"; }
+        }
+
         public DelegateCommand CallCommand { get; set; }
         public DelegateCommand OpenWebsiteCommand { get; set; }
         public DelegateCommand ShareCommand { get; set; }
         public DelegateCommand FavouriteCommand { get; set; }
+        public DelegateCommand TapLockMapCommand { get; set; }
         public DelegateCommand TapCenterMapCommand { get; set; }
 
         public SchoolPageViewModel(ISqlLiteService sql)
@@ -88,12 +106,14 @@ namespace NZSchools.ViewModels
             _sql = sql;
 
             GraphSeries = new List<Graph>();
-            ZoomLevel = 16;            
+            ZoomLevel = 16;
+            IsMapLocked = true;
 
             CallCommand = new DelegateCommand(ExecuteCallCommand);
             OpenWebsiteCommand = new DelegateCommand(ExecuteOpenWebsiteCommand);
             ShareCommand = new DelegateCommand(ExecuteShareCommand);
             FavouriteCommand = new DelegateCommand(ExecuteFavouriteCommand);
+            TapLockMapCommand = new DelegateCommand(ExecuteTapLockMapCommand);
             TapCenterMapCommand = new DelegateCommand(ExecuteTapCenterMapCommand);
 
             _dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -127,6 +147,11 @@ namespace NZSchools.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine("Show Error");
             }
+        }
+
+        private void ExecuteTapLockMapCommand()
+        {
+            IsMapLocked = !IsMapLocked;
         }
 
         public void ExecuteTapCenterMapCommand()

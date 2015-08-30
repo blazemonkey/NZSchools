@@ -18,7 +18,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FavouritesIconConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\GeopointConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\GpsStateToSolidBrushConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ImageFullPathConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\LockIconConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\PercentFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToLowerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AlphaKeyGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ItemClickCommand.cs" />
@@ -37,6 +40,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileReaderService\IFileReaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\IJsonService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonService\JsonService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MessengerService\IMessengerService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MessengerService\MessengerService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
@@ -51,6 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Data\directories.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Icons\lock.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)Images\Icons\unlock.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\auckland.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\bayofplenty.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\canterbury.png" />
