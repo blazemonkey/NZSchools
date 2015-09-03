@@ -65,6 +65,11 @@ namespace NZSchools.Services.SqlLiteService
             return await _conn.Table<Directory>().Where(x => x.RegionalCouncil != "Unknown").ToListAsync();
         }
 
+        public async Task<IEnumerable<Directory>> GetFavourites()
+        {
+            return await _conn.Table<Directory>().Where(x => x.RegionalCouncil != "Unknown").Where(x => x.IsFavourites).ToListAsync();
+        }
+
         public async Task<IEnumerable<Region>> GetRegions()
         {
             return await _conn.Table<Region>().OrderBy(x => x.Order).ToListAsync();

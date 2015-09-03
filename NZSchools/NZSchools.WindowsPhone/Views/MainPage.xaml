@@ -235,6 +235,13 @@
                           Label ="nearby list" 
                           Icon="List" 
                           Command="{Binding TapNearbyListCommand}"/>
+            <AppBarButton x:Name="CompareSchoolsAppBar"
+                          Label="compare schools"
+                          Command="{Binding TapCompareCommand}">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Images/Icons/compare.png"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton x:Name="LockMapAppBar"
                           Label="{Binding IsMapLockedLabel}"
                           Command="{Binding TapLockMapCommand}">

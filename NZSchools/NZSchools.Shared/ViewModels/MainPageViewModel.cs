@@ -362,6 +362,7 @@ namespace NZSchools.ViewModels
         public DelegateCommand TapLockMapCommand { get; set; }
         public DelegateCommand TapNearbyListCommand { get; set; }
         public DelegateCommand TapCenterMapCommand { get; set; }
+        public DelegateCommand TapCompareCommand { get; set; }
 
         public MainPageViewModel(ISqlLiteService db, INavigationService nav, IAppDataService appData, IMessengerService msg,
             ISettingsPageViewModel settings)
@@ -389,7 +390,8 @@ namespace NZSchools.ViewModels
             TapSettingsCommand = new DelegateCommand(ExecuteTapSettingsCommand);
             TapLockMapCommand = new DelegateCommand(ExecuteTapLockMapCommand);
             TapNearbyListCommand = new DelegateCommand(ExecuteTapNearbyListCommand);
-            TapCenterMapCommand = new DelegateCommand(ExecuteTapCenterMapCommand);           
+            TapCenterMapCommand = new DelegateCommand(ExecuteTapCenterMapCommand);
+            TapCompareCommand = new DelegateCommand(ExecuteTapCompareCommand);
         }
 
         private void UpdateStatusChanged(EventPattern<StatusChangedEventArgs> e)
@@ -561,6 +563,11 @@ namespace NZSchools.ViewModels
             position.Latitude = LastPositionLatitude;
             position.Longitude = LastPositionLongitude;
             Center = new Geopoint(position);
+        }
+
+        public void ExecuteTapCompareCommand()
+        {
+            _nav.Navigate(Experiences.Compare);
         }
 
         private void Populate<T>(IList<T> obv, List<T> collection)

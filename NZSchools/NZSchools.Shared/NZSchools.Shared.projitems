@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AlphaKeyGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ItemClickCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\JumpListHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IComparePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IResultsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISchoolPageViewModel.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SqlLiteService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ComparePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ResultsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SchoolPageViewModel.cs" />
@@ -56,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Data\directories.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Images\Icons\compare.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Icons\lock.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

@@ -64,6 +64,7 @@ namespace NZSchools.Views
             NearbySchoolsAppBar.Visibility = Visibility.Collapsed;
             LockMapAppBar.Visibility = Visibility.Collapsed;
             CenterMapAppBar.Visibility = Visibility.Collapsed;
+            CompareSchoolsAppBar.Visibility = Visibility.Collapsed;
 
             switch (MainPivot.SelectedIndex)
             {
@@ -74,7 +75,7 @@ namespace NZSchools.Views
                     break;
                 case 1:
                     {
-                        SettingsAppBar.Visibility = Visibility.Visible;
+                        CompareSchoolsAppBar.Visibility = Visibility.Visible;
                     }
                     break;
                 case 2:
