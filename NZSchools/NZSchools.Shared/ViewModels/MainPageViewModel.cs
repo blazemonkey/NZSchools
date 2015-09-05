@@ -583,16 +583,21 @@ namespace NZSchools.ViewModels
 
             if (_settings.GetGps())
             {
-                Geolocator = new Geolocator();
-                Geolocator.DesiredAccuracy = PositionAccuracy.High;
-                Geolocator.MovementThreshold = 10;
+                if (Geolocator == null)
+                {
+                    Geolocator = new Geolocator();
+                    Geolocator.DesiredAccuracy = PositionAccuracy.High;
+                    Geolocator.MovementThreshold = 20;
 
-                StatusChanged = Observable.FromEventPattern<StatusChangedEventArgs>(Geolocator, "StatusChanged")
-                    .ObserveOnDispatcher()
-                    .Do(x => UpdateStatusChanged(x)).Subscribe();
-                PositionChanged = Observable.FromEventPattern<PositionChangedEventArgs>(Geolocator, "PositionChanged")
-                    .ObserveOnDispatcher()
-                    .Do(x => UpdatePositionChanged(x)).Subscribe();
+                    Observable.FromEventPattern<StatusChangedEventArgs>(Geolocator, "StatusChanged")
+                        .ObserveOnDispatcher()
+                        .Do(x => UpdateStatusChanged(x)).Subscribe();
+                    Observable.FromEventPattern<PositionChangedEventArgs>(Geolocator, "PositionChanged")
+                        .ObserveOnDispatcher()
+                        .Do(x => UpdatePositionChanged(x)).Subscribe();
+                }
+
+
 
                 if (lastLatitude == 0.0 && lastLongitude == 0.0)
                     ZoomLevel = 2;
@@ -651,11 +656,11 @@ namespace NZSchools.ViewModels
 
         public override void OnNavigatedFrom(Dictionary<string, object> viewModelState, bool suspending)
         {
-            if (StatusChanged != null)
-                StatusChanged.Dispose();
+            //if (StatusChanged != null)
+            //    StatusChanged.Dispose();
 
-            if (PositionChanged != null)
-                PositionChanged.Dispose();
+            //if (PositionChanged != null)
+            //    PositionChanged.Dispose();
 
             base.OnNavigatedFrom(viewModelState, suspending);
         }

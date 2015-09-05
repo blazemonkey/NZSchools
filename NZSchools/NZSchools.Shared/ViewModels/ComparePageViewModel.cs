@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
 namespace NZSchools.ViewModels
@@ -67,6 +68,7 @@ namespace NZSchools.ViewModels
             if (!(Favourites.Any()))
                 return;
 
+            await Task.Delay(50);
             if (Favourites.Count() == 1)
             {
                 SelectedSchool1 = Favourites.First();

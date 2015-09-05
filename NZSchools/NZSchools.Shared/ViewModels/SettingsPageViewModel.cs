@@ -25,6 +25,8 @@ namespace NZSchools.ViewModels
         private ObservableCollection<string> _distances;
         private string _selectedDistance;
         private string _version;
+        private string _policyText;
+        private string _policy2Text;
 
         public ObservableCollection<Region> Regions
         {
@@ -92,6 +94,26 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public string PolicyText
+        {
+            get { return _policyText; }
+            set
+            {
+                _policyText = value;
+                OnPropertyChanged("PolicyText");
+            }
+        }
+
+        public string Policy2Text
+        {
+            get { return _policy2Text; }
+            set
+            {
+                _policy2Text = value;
+                OnPropertyChanged("Policy2Text");
+            }
+        }
+
         public SettingsPageViewModel(IAppDataService appData, ISqlLiteService db)
         {
             _appData = appData;
@@ -103,6 +125,9 @@ namespace NZSchools.ViewModels
             Distances.Add("1 km");
             Distances.Add("2 km");
             Distances.Add("5 km");
+
+            PolicyText = "While using our New Zealand Schools app, we may collect GPS data from your location to determine any nearby schools in your area. This GPS data will not be stored or transmitted, and will be automatically erased from memory every time the app is closed.";
+            Policy2Text = "All information displayed has been gathered from the New Zealand Ministry of Education, where it is available under the Creative Commons Attribution 3.0 New Zealand licence. Therefore Mosu Apps will not be responsible for the accuracy, availability, completeneess of the information and shall not have any legal liability for any loss resulting in the use of such information.";
         }
 
         public int GetDefaultRegion()

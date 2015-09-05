@@ -32,6 +32,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0"
                                    Text="{Binding Directory.Name, Converter={StaticResource StringToLowerConverter}}"
@@ -108,7 +109,7 @@
                                        Margin="5"/>
                             <TextBlock Grid.Row="5"
                                        Grid.Column="0"
-                                       Text="decile"
+                                       Text="decile*"
                                        Margin="5"/>
                             <TextBlock Grid.Row="5"
                                        Grid.Column="1"
@@ -188,6 +189,12 @@
                                        Foreground="Gray"
                                        Margin="5"/>
                         </Grid>
+                        <TextBlock Grid.Row="2"
+                                   Margin="10"
+                                   HorizontalAlignment="Center"
+                                   FontSize="10"
+                                   Text="decile* = 0 / 99 = decile info not available"
+                                   Foreground="Gray"/>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
@@ -207,6 +214,7 @@
                 <ScrollViewer>
                     <Grid Margin="10">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
@@ -294,7 +302,7 @@
                                    Margin="5"/>
                             <TextBlock Grid.Row="5"
                                    Grid.Column="0"
-                                   Text="melaa"
+                                   Text="melaa*"
                                    Margin="5"/>
                             <TextBlock Grid.Row="5"
                                    Grid.Column="1"
@@ -377,6 +385,12 @@
                                 </charts:PieSeries.LegendItemStyle>
                             </charts:PieSeries>
                         </charts:Chart>
+                        <TextBlock Grid.Row="2"
+                                   Margin="10"
+                                   HorizontalAlignment="Center"
+                                   FontSize="10"
+                                   Text="melaa* = middle eastern, latin american, african"
+                                   Foreground="Gray"/>
                     </Grid>
                 </ScrollViewer>
             </PivotItem>
