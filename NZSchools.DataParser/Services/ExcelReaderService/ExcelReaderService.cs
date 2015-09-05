@@ -44,7 +44,7 @@ namespace NZSchools.DataParser.Services.ExcelReaderService
 
                             if (info.PropertyType.IsValueType)
                                 info.SetValue(t, Convert.ChangeType(string.IsNullOrEmpty(row[index]) ? "0" : row[index].ToString(), info.PropertyType, null));
-                        }
+                        }                        
 
                         list.Add(t);
                     }

@@ -28,15 +28,42 @@ namespace NZSchools.DataParser
 
         public async Task Begin()
         {
-            var directories = _excel.Read<Directory>(DirectoryFilePath, 3);
+            var directories = _excel.Read<Directory>(DirectoryFilePath, 3).ToList();
             if (directories == null)
                 return;
+            else
+            {
+                // remove duplicate school ids and combine fields
+                var duplicates = directories.GroupBy(x => x.SchoolId).Where(x => x.Count() > 1).ToList();
+                foreach (var d in duplicates)
+                {
+                    var dupDirectories = directories.Where(x => x.SchoolId == d.Key);
+                    var principal = "";
+                    for (var i = 0; i < dupDirectories.Count(); i++)
+                    {
+                        var dup = dupDirectories.ElementAt(i) as Directory;
+
+                        if (i == dupDirectories.Count() - 1)
+                        {
+                            principal = principal + dup.Principal;
+                        }
+                        else
+                        {
+                            principal = principal + dup.Principal + ", ";
+                        }
+                    }
+
+                    dupDirectories.Where(x => x.SchoolId == d.Key).First().Principal = principal;
+                    var remove = dupDirectories.Where(x => x.SchoolId == d.Key).ElementAt(1);
+                    directories.Remove(remove);
+                }
+            }
 
             var apiDirectories = await _rest.GetApi<Directory>(WebServiceUrl, "directories");
             if (apiDirectories == null)
                 return;
 
-            CompareDirectories(directories.ToList(), apiDirectories.Where(x => x.Status).ToList());
+            CompareDirectories(directories, apiDirectories.Where(x => x.Status).ToList());
         }
         
         private async void CompareDirectories(List<Directory> currentList, List<Directory> apiList)
@@ -53,7 +80,7 @@ namespace NZSchools.DataParser
                     c.Status = true;
                     if (await _rest.PostApi(WebServiceUrl, "directories", _json.Serialize(c)))
                         Logger.Info("Inserted: " + c.SchoolId);
-                }
+                }                
             }
 
             foreach (var a in apiList)
@@ -70,6 +97,7 @@ namespace NZSchools.DataParser
                     try
                     {
                         var c = currentList.SingleOrDefault(x => x.SchoolId == a.SchoolId);
+                        c.Id = a.Id;
 
                         if (c.Asian != a.Asian || c.Authority != a.Authority || c.CensusAreaUnit != a.CensusAreaUnit
                             || c.City != a.City || c.Decile != a.Decile || c.Definition != a.Definition || c.EducationRegion != a.EducationRegion
@@ -84,8 +112,7 @@ namespace NZSchools.DataParser
                             || c.TerritorialAuthorityWithAucklandLocalBoard != a.TerritorialAuthorityWithAucklandLocalBoard
                             || c.TotalSchoolRoll != a.TotalSchoolRoll || c.UrbanArea != a.UrbanArea || c.Ward != a.Ward)
                         {
-                            c.ChangeId = maxChangeId++;
-                            c.Id = a.Id;
+                            c.ChangeId = maxChangeId++;                            
 
                             if (await _rest.PutApi(WebServiceUrl, "directories", _json.Serialize(c)))
                                 Logger.Info("Updated: " + a.SchoolId);
@@ -95,6 +122,10 @@ namespace NZSchools.DataParser
                     {
                         Logger.Error(ioe);
                         Logger.Error("Found more than one result: " + a.SchoolId);
+
+                        var c = currentList.SingleOrDefault(x => x.SchoolId == a.SchoolId && x.Principal == a.Principal);
+                        c.Id = a.Id;
+
                         continue;
                     }
                 }

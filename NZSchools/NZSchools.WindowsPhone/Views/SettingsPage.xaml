@@ -71,9 +71,17 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0"
-                               Text="version"
+                               Text="information version"
                                Margin="10"/>
                         <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Margin="10"
+                               Foreground="Gray"
+                               Text="{Binding InfoVersion}"/>
+                        <TextBlock Grid.Row="1"
+                               Text="app version"
+                               Margin="10"/>
+                        <TextBlock Grid.Row="1"
                                Grid.Column="1"
                                Margin="10"
                                Foreground="Gray"

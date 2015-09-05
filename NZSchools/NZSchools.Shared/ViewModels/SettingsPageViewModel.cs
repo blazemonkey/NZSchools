@@ -24,6 +24,7 @@ namespace NZSchools.ViewModels
         private bool _gps;
         private ObservableCollection<string> _distances;
         private string _selectedDistance;
+        private string _infoVersion;
         private string _version;
         private string _policyText;
         private string _policy2Text;
@@ -84,6 +85,16 @@ namespace NZSchools.ViewModels
             }
         }
 
+        public string InfoVersion
+        {
+            get { return _infoVersion; }
+            set
+            {
+                _infoVersion = value;
+                OnPropertyChanged("InfoVersion");
+            }
+        }
+
         public string Version
         {
             get { return _version; }
@@ -128,6 +139,8 @@ namespace NZSchools.ViewModels
 
             PolicyText = "While using our New Zealand Schools app, we may collect GPS data from your location to determine any nearby schools in your area. This GPS data will not be stored or transmitted, and will be automatically erased from memory every time the app is closed.";
             Policy2Text = "All information displayed has been gathered from the New Zealand Ministry of Education, where it is available under the Creative Commons Attribution 3.0 New Zealand licence. Therefore Mosu Apps will not be responsible for the accuracy, availability, completeneess of the information and shall not have any legal liability for any loss resulting in the use of such information.";
+
+            InfoVersion = "aug 2015";
         }
 
         public int GetDefaultRegion()

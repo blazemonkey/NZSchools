@@ -9,7 +9,7 @@ namespace NZSchools.DataParser
 {
     public class FileDownloader
     {
-        private const string DirectoryUrl = "http://www.educationcounts.govt.nz/__data/assets/excel_doc/0004/62572/directory-School-current.xls";
+        private const string DirectoryUrl = "http://www.educationcounts.govt.nz/__data/assets/excel_doc/0004/62572/Directory-School-current.xls";
         private const string DirectoryFilePath = "..\\..\\Data\\Directory.xls";
 
         private readonly IWebClientService _webClient;
