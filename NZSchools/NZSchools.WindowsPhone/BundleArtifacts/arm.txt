@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Gary\Documents\Visual Studio 2013\Projects\NZSchools\NZSchools\NZSchools.WindowsPhone\bin\ARM\Release\NZSchools.WindowsPhone_1.1.0.0_Bundle\NZSchools.WindowsPhone_1.1.0.0_ARM.appx
+SymbolPackage=C:\Users\Gary\Documents\Visual Studio 2013\Projects\NZSchools\NZSchools\NZSchools.WindowsPhone\AppPackages\NZSchools.WindowsPhone_1.1.0.0_Test\NZSchools.WindowsPhone_1.1.0.0_ARM.appxsym
+ResourcePack=C:\Users\Gary\Documents\Visual Studio 2013\Projects\NZSchools\NZSchools\NZSchools.WindowsPhone\bin\ARM\Release\NZSchools.WindowsPhone_1.1.0.0_Bundle\NZSchools.WindowsPhone_1.1.0.0_scale-100.appx
+ResourcePack=C:\Users\Gary\Documents\Visual Studio 2013\Projects\NZSchools\NZSchools\NZSchools.WindowsPhone\bin\ARM\Release\NZSchools.WindowsPhone_1.1.0.0_Bundle\NZSchools.WindowsPhone_1.1.0.0_scale-140.appx
