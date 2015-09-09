@@ -126,7 +126,9 @@ namespace NZSchools.ViewModels
                 return;
 
             var telephone = Directory.Telephone.Replace(" ", "");
+            #if WINDOWS_PHONE
             PhoneCallManager.ShowPhoneCallUI(telephone, Directory.Name);
+            #endif
         }
 
         public async void ExecuteOpenWebsiteCommand()

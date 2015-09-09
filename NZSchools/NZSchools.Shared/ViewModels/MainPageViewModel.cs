@@ -354,6 +354,7 @@ namespace NZSchools.ViewModels
         }
 
         public DelegateCommand SelectedRegionChangedCommand { get; set; }
+        public DelegateCommand<Region> SelectedRegionChangedWithParameterCommand { get; set; }
         public DelegateCommand SelectedCityChangedCommand { get; set; }
 
         public DelegateCommand TapSearchSchoolsCommand { get; set; }
@@ -383,6 +384,7 @@ namespace NZSchools.ViewModels
             IsMapLocked = true;
 
             SelectedRegionChangedCommand = new DelegateCommand(ExecuteSelectedRegionChangedCommand);
+            SelectedRegionChangedWithParameterCommand = new DelegateCommand<Region>(ExecuteSelectedRegionChangedWithParameterCommand);
             SelectedCityChangedCommand = new DelegateCommand(ExecuteSelectedCityChangedCommand);
 
             TapSearchSchoolsCommand = new DelegateCommand(ExecuteTapSearchSchoolsCommand);
@@ -472,6 +474,12 @@ namespace NZSchools.ViewModels
                                                                  .Select(x => x.Key.ToLower().ToString())
                                                                  .OrderBy(x => x).ToList());
             SelectedCity = Cities.FirstOrDefault();
+        }
+
+        private void ExecuteSelectedRegionChangedWithParameterCommand(Region region)
+        {
+            SelectedRegion = region;
+            ExecuteSelectedRegionChangedCommand();
         }
 
         private async void ExecuteSelectedCityChangedCommand()
