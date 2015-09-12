@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\PercentFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToLowerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AlphaKeyGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\VisualHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ItemClickCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\JumpListHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IComparePageViewModel.cs" />
@@ -50,6 +51,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SqlLiteService\SqlLiteService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UserControls\MapIconUserControl.xaml.cs">
+      <DependentUpon>MapIconUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ComparePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ResultsPageViewModel.cs" />
@@ -79,5 +83,11 @@
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\waikato.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\wellington.png" />
     <Content Include="$(MSBuildThisFileDirectory)Images\Regions\westcoast.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)UserControls\MapIconUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

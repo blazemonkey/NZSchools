@@ -86,9 +86,6 @@
     <Compile Include="UserControls\GpsUserControl.xaml.cs">
       <DependentUpon>GpsUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MapIconUserControl.xaml.cs">
-      <DependentUpon>MapIconUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\QuickSchoolViewUserControl.xaml.cs">
       <DependentUpon>QuickSchoolViewUserControl.xaml</DependentUpon>
     </Compile>
@@ -142,10 +139,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="UserControls\GpsUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\MapIconUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

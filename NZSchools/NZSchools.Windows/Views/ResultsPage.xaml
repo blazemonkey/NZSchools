@@ -4,11 +4,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NZSchools.Views"
+    xmlns:bm="using:Bing.Maps"
     xmlns:converters="using:NZSchools.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
-    mc:Ignorable="d">
+    mc:Ignorable="d" FontFamily="Global User Interface">
 
     <Page.Resources>
         <converters:StringToLowerConverter x:Key="StringToLowerConverter"/>
@@ -32,10 +33,12 @@
                                FontSize="64"/>
                 </StackPanel>
             </Hub.Header>
-            <HubSection Header="schools list" Width="600">
+            <HubSection x:Name="ListHubSection"
+                        Header="schools list" Width="Auto">
                 <DataTemplate>
                     <Grid>
-                        <StackPanel Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverse}">
+                        <StackPanel Width="600"
+                                    Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverse}">
                             <TextBlock Text="no schools found"
                                        FontSize="24"
                                        Foreground="Black"
@@ -55,11 +58,13 @@
                                        TextWrapping="Wrap"
                                        Style="{StaticResource HubSectionText}"/>
                         </StackPanel>
-                        <ListView Width="600"
+                        <ListView x:Name="SchoolsListView"
+                                  Width="600"
                                   ItemsSource="{Binding Source={StaticResource DirectoryGroups}}"
                                   SelectionMode="None"
                                   IsItemClickEnabled="True"
-                                  Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                  Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Loaded="ListView_Loaded">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="5">
@@ -93,6 +98,16 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
+                </DataTemplate>
+            </HubSection>
+            <HubSection x:Name="MapHubSection"
+                        Header="map">
+                <DataTemplate>
+                    <bm:Map Credentials="AqGyPFoYn5Hyb93d7whE6G4R1KoibkxepanBMdjrGJ46N7MpnfvOKQFzS16-hctC"
+                            x:Name="MapControl"
+                            Width="1000"
+                            Height="600"
+                            Loaded="MapControl_Loaded"></bm:Map>
                 </DataTemplate>
             </HubSection>
         </Hub>
