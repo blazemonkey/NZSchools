@@ -81,6 +81,7 @@ namespace NZSchools.ViewModels
             get { return IsMapLocked ? "unlock" : "lock"; }
         }
 
+        public DelegateCommand BackCommand { get; set; }
         public DelegateCommand TapLockMapCommand { get; set; }
         public DelegateCommand<Directory> TapSchoolCommand { get; set; }
 
@@ -92,8 +93,14 @@ namespace NZSchools.ViewModels
             IsLoading = true;
             IsMapLocked = true;
 
+            BackCommand = new DelegateCommand(ExecuteBackCommand);
             TapLockMapCommand = new DelegateCommand(ExecuteTapLockMapCommand);
             TapSchoolCommand = new DelegateCommand<Directory>(ExecuteTapSchoolCommand);
+        }
+
+        private void ExecuteBackCommand()
+        {
+            _nav.GoBack();
         }
 
         private void ExecuteTapLockMapCommand()

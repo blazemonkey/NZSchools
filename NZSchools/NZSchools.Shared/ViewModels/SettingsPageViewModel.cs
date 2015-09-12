@@ -1,7 +1,9 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
 using NZSchools.Interfaces;
 using NZSchools.Models;
 using NZSchools.Services.AppDataService;
+using NZSchools.Services.NavigationService;
 using NZSchools.Services.SqlLiteService;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace NZSchools.ViewModels
     {
         private IAppDataService _appData;
         private ISqlLiteService _db;
+        private INavigationService _nav;
 
         private ObservableCollection<Region> _regions;
         private Region _selectedRegion;
@@ -125,10 +128,13 @@ namespace NZSchools.ViewModels
             }
         }
 
-        public SettingsPageViewModel(IAppDataService appData, ISqlLiteService db)
+        public DelegateCommand BackCommand { get; set; }
+
+        public SettingsPageViewModel(IAppDataService appData, ISqlLiteService db, INavigationService nav)
         {
             _appData = appData;
             _db = db;
+            _nav = nav;
 
             Regions = new ObservableCollection<Region>();
             Distances = new ObservableCollection<string>();
@@ -141,6 +147,13 @@ namespace NZSchools.ViewModels
             Policy2Text = "All information displayed has been gathered from the New Zealand Ministry of Education, where it is available under the Creative Commons Attribution 3.0 New Zealand licence. Therefore Mosu Apps will not be responsible for the accuracy, availability, completeneess of the information and shall not have any legal liability for any loss resulting in the use of such information.";
 
             InfoVersion = "aug 2015";
+
+            BackCommand = new DelegateCommand(ExecuteBackCommand);
+        }
+
+        private void ExecuteBackCommand()
+        {
+            _nav.GoBack();
         }
 
         public int GetDefaultRegion()
