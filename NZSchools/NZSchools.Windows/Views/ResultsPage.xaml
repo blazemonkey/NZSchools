@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NZSchools.Views"
     xmlns:bm="using:Bing.Maps"
+    xmlns:charts="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     xmlns:converters="using:NZSchools.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:NZSchools.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d" FontFamily="Global User Interface">
@@ -63,6 +65,7 @@
                                   ItemsSource="{Binding Source={StaticResource DirectoryGroups}}"
                                   SelectionMode="None"
                                   IsItemClickEnabled="True"
+                                  helpers:ItemClickCommand.Command="{Binding TapSchoolCommand}"
                                   Visibility="{Binding HasDirectories, Converter={StaticResource BooleanToVisibilityConverter}}"
                                   Loaded="ListView_Loaded">
                             <ListView.ItemTemplate>
@@ -81,7 +84,8 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="★"
                                                            Margin="0,0,2,0"
-                                                           Visibility="{Binding IsFavourites, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                                           Visibility="{Binding IsFavourites, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                           Style="{StaticResource HubSectionText}"/>
                                                 <TextBlock Text="{Binding Name, Converter={StaticResource StringToLowerConverter}}" 
                                                            TextWrapping="Wrap" 
                                                            Margin="0"
@@ -101,12 +105,12 @@
                 </DataTemplate>
             </HubSection>
             <HubSection x:Name="MapHubSection"
-                        Header="map">
+                        Header="map"
+                        VerticalContentAlignment="Stretch">
                 <DataTemplate>
                     <bm:Map Credentials="AqGyPFoYn5Hyb93d7whE6G4R1KoibkxepanBMdjrGJ46N7MpnfvOKQFzS16-hctC"
                             x:Name="MapControl"
                             Width="1000"
-                            Height="600"
                             Loaded="MapControl_Loaded"></bm:Map>
                 </DataTemplate>
             </HubSection>

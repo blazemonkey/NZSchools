@@ -19,6 +19,7 @@ namespace NZSchools.ViewModels
     public class SchoolPageViewModel : ViewModel, ISchoolPageViewModel
     {
         private ISqlLiteService _sql;
+        private INavigationService _nav;
 
         private Directory _directory;
         private List<Graph> _graphSeries;
@@ -94,6 +95,7 @@ namespace NZSchools.ViewModels
             get { return IsMapLocked ? "unlock" : "lock"; }
         }
 
+        public DelegateCommand BackCommand { get; set; }
         public DelegateCommand CallCommand { get; set; }
         public DelegateCommand OpenWebsiteCommand { get; set; }
         public DelegateCommand ShareCommand { get; set; }
@@ -101,14 +103,16 @@ namespace NZSchools.ViewModels
         public DelegateCommand TapLockMapCommand { get; set; }
         public DelegateCommand TapCenterMapCommand { get; set; }
 
-        public SchoolPageViewModel(ISqlLiteService sql)
+        public SchoolPageViewModel(ISqlLiteService sql, INavigationService nav)
         {
             _sql = sql;
+            _nav = nav;
 
             GraphSeries = new List<Graph>();
             ZoomLevel = 16;
             IsMapLocked = true;
 
+            BackCommand = new DelegateCommand(ExecuteBackCommand);
             CallCommand = new DelegateCommand(ExecuteCallCommand);
             OpenWebsiteCommand = new DelegateCommand(ExecuteOpenWebsiteCommand);
             ShareCommand = new DelegateCommand(ExecuteShareCommand);
@@ -118,6 +122,11 @@ namespace NZSchools.ViewModels
 
             _dataTransferManager = DataTransferManager.GetForCurrentView();
             _dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(ShareTextHandler);
+        }
+
+        private void ExecuteBackCommand()
+        {
+            _nav.GoBack();
         }
 
         public void ExecuteCallCommand()

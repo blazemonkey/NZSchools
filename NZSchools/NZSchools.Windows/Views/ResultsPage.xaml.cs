@@ -34,26 +34,33 @@ namespace NZSchools.Views
     {
         private Map _mapControl;
         private ListView _listView;
+        private bool _isBack;
 
         public ResultsPage()
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
-            //await MapControl.TrySetViewAsync(new Geopoint(defaultCenter));    
+            _isBack = e.NavigationMode == NavigationMode.Back;
         }
 
         private void MapControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (_isBack)
+                return;
+
+            _listView.ScrollIntoView(_listView.Items.First());
+
             var map = VisualHelper.FindChildControl<Map>(MapHubSection, "MapControl") as Map;
             _mapControl = map;
 
             _mapControl.ZoomLevel = 5;
             _mapControl.Center = new Location(-42.897857, 170.816761);
 
+            _mapControl.Children.Clear();
             var geopoints = new List<Geopoint>();
             _listView.Items.Cast<Directory>().Where(x => x.Latitude != 0 && x.Longitude != 0).ToObservable()
                 .ObserveOnDispatcher().Do(x =>
