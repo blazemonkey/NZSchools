@@ -53,92 +53,94 @@
             </HubSection>
             <HubSection Header="search criteria">
                 <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="425"/>
-                        </Grid.ColumnDefinitions>
-                        <SearchBox Grid.Row="0"
-                                   Grid.ColumnSpan="2"
-                                   Margin="20" 
-                                   PlaceholderText="school name"
-                                   FontSize="24"
-                                   FontWeight="Light"
-                                   QueryText="{Binding SearchText, Mode=TwoWay}"/>
-                        <TextBlock Grid.Row="1"
-                                   Text="region"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="1"
-                                   Text="{Binding SelectedRegion.Name, Mode=TwoWay}"
-                                   Foreground="Gray"
-                                   Padding="7,0,0,0"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <TextBlock Grid.Row="2"
-                                   Text="city"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <ComboBox Grid.Row="2"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding Cities}"
-                                  SelectedValue="{Binding SelectedCity, Mode=TwoWay}"
-                                  Style="{StaticResource HubSectionComboBox}">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="SelectionChanged">
-                                    <core:InvokeCommandAction Command="{Binding SelectedCityChangedCommand}" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </ComboBox>
-                        <TextBlock Grid.Row="3"
-                                   Text="suburb"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <ComboBox Grid.Row="3"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding Suburbs}"
-                                  SelectedValue="{Binding SelectedSuburb, Mode=TwoWay}"
-                                  Style="{StaticResource HubSectionComboBox}"/>
-                        <TextBlock Grid.Row="4"
-                                   Text="gender"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <ComboBox Grid.Row="4"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding Genders}"
-                                  SelectedValue="{Binding SelectedGender, Mode=TwoWay}"
-                                  Style="{StaticResource HubSectionComboBox}"/>
-                        <TextBlock Grid.Row="5"
-                                   Text="school type"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <ComboBox Grid.Row="5"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding SchoolTypes}"
-                                  SelectedValue="{Binding SelectedSchoolType, Mode=TwoWay}"
-                                  Style="{StaticResource HubSectionComboBox}"/>
-                        <TextBlock Grid.Row="6"
-                                   Text="decile"
-                                   Style="{StaticResource HubSectionText}"/>
-                        <ComboBox Grid.Row="6"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding Deciles}"
-                                  SelectedValue="{Binding SelectedDecile, Mode=TwoWay}"
-                                  Style="{StaticResource HubSectionComboBox}"/>
-                        <Button Grid.Row="7" 
-                                Grid.ColumnSpan="2"
-                                Content="search schools"
-                                HorizontalAlignment="Stretch"
-                                Width="Auto"
-                                Margin="20"
-                                Command="{Binding TapSearchSchoolsCommand}">
-                        </Button>
-                    </Grid>
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="425"/>
+                            </Grid.ColumnDefinitions>
+                            <SearchBox Grid.Row="0"
+                                       Grid.ColumnSpan="2"
+                                       Margin="20" 
+                                       PlaceholderText="school name"
+                                       FontSize="24"
+                                       FontWeight="Light"
+                                       QueryText="{Binding SearchText, Mode=TwoWay}"/>
+                            <TextBlock Grid.Row="1"
+                                       Text="region"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding SelectedRegion.Name, Mode=TwoWay}"
+                                       Foreground="Gray"
+                                       Padding="7,0,0,0"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="city"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <ComboBox Grid.Row="2"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding Cities}"
+                                      SelectedValue="{Binding SelectedCity, Mode=TwoWay}"
+                                      Style="{StaticResource HubSectionComboBox}">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:InvokeCommandAction Command="{Binding SelectedCityChangedCommand}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ComboBox>
+                            <TextBlock Grid.Row="3"
+                                       Text="suburb"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <ComboBox Grid.Row="3"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding Suburbs}"
+                                      SelectedValue="{Binding SelectedSuburb, Mode=TwoWay}"
+                                      Style="{StaticResource HubSectionComboBox}"/>
+                            <TextBlock Grid.Row="4"
+                                       Text="gender"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <ComboBox Grid.Row="4"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding Genders}"
+                                      SelectedValue="{Binding SelectedGender, Mode=TwoWay}"
+                                      Style="{StaticResource HubSectionComboBox}"/>
+                            <TextBlock Grid.Row="5"
+                                       Text="school type"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <ComboBox Grid.Row="5"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding SchoolTypes}"
+                                      SelectedValue="{Binding SelectedSchoolType, Mode=TwoWay}"
+                                      Style="{StaticResource HubSectionComboBox}"/>
+                            <TextBlock Grid.Row="6"
+                                       Text="decile"
+                                       Style="{StaticResource HubSectionText}"/>
+                            <ComboBox Grid.Row="6"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding Deciles}"
+                                      SelectedValue="{Binding SelectedDecile, Mode=TwoWay}"
+                                      Style="{StaticResource HubSectionComboBox}"/>
+                            <Button Grid.Row="7" 
+                                    Grid.ColumnSpan="2"
+                                    Content="search schools"
+                                    HorizontalAlignment="Stretch"
+                                    Width="Auto"
+                                    Margin="20"
+                                    Command="{Binding TapSearchSchoolsCommand}">
+                            </Button>
+                        </Grid>
+                    </ScrollViewer>
                 </DataTemplate>
             </HubSection>
             <HubSection Header="favourite schools" Width="600">
