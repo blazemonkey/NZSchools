@@ -38,12 +38,6 @@
                         <TextBlock Grid.Row="0"
                                Text="default region"
                                Style="{StaticResource HubSectionText}"/>
-                        <TextBlock Grid.Row="1"
-                               Text="gps"
-                               Style="{StaticResource HubSectionText}"/>
-                        <TextBlock Grid.Row="2"
-                               Text="nearby distance range"
-                               Style="{StaticResource HubSectionText}"/>
                         <ComboBox Grid.Row="0"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Regions}"
@@ -51,17 +45,6 @@
                                   DisplayMemberPath="Name"
                                   VerticalAlignment="Center"
                                   Style="{StaticResource HubSectionComboBox}" />
-                        <ToggleSwitch Grid.Row="1"
-                                  Grid.Column="1"
-                                  BorderBrush="Gray"
-                                  VerticalAlignment="Center"
-                                  IsOn="{Binding Gps, Mode=TwoWay}"/>
-                        <ComboBox Grid.Row="2"
-                                  Grid.Column="1"
-                                  ItemsSource="{Binding Distances}"
-                                  SelectedValue="{Binding SelectedDistance, Mode=TwoWay}"
-                                  VerticalAlignment="Center"
-                                  Style="{StaticResource HubSectionComboBox}"/>
                     </Grid>
                 </DataTemplate>
             </HubSection>
