@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="39032MosuApps.NewZealandSchools" Publisher="CN=EBB1F7FA-DD0A-4736-915B-A2D0AE8D0BA4" Version="1.1.0.0" />
+  <Identity Name="39032MosuApps.NewZealandSchools" Publisher="CN=EBB1F7FA-DD0A-4736-915B-A2D0AE8D0BA4" Version="1.1.0.3" />
   <Properties>
     <DisplayName>New Zealand Schools</DisplayName>
     <PublisherDisplayName>Mosu Apps</PublisherDisplayName>

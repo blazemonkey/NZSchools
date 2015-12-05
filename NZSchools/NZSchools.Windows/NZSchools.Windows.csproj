@@ -19,6 +19,8 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>DC3486E2E85AF210F68BA617B1C7B74247A11EF8</PackageCertificateThumbprint>
+    <AppxPackageDir>Z:\Programming\Projects\NZSchools\Packages\</AppxPackageDir>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
