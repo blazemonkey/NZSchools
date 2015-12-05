@@ -131,6 +131,7 @@
     <Content Include="Assets\WideLogo.scale-140.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\AppResources.xaml">
@@ -205,7 +206,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=2.8.3.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -229,7 +230,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Rx-Xaml.2.2.5\lib\portable-win81+wpa81\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>..\..\packages\Rx-XAML.2.2.5\lib\portable-win81+wpa81\System.Reactive.Windows.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WinRTXamlToolkit, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -242,19 +243,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.8.11.1">
-      <Name>SQLite for Windows Phone 8.1</Name>
+    <SDKReference Include="SQLite.WP81, Version=3.9.2">
+      <Name>SQLite for Windows Phone 8.1 %28SQLite.WP81, Version=3.9.2%29</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup />

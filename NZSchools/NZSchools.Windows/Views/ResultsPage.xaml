@@ -109,6 +109,7 @@
                         VerticalContentAlignment="Stretch">
                 <DataTemplate>
                     <bm:Map Credentials="AqGyPFoYn5Hyb93d7whE6G4R1KoibkxepanBMdjrGJ46N7MpnfvOKQFzS16-hctC"
+                            HomeRegion="US"
                             x:Name="MapControl"
                             Width="1000"
                             Loaded="MapControl_Loaded"></bm:Map>
